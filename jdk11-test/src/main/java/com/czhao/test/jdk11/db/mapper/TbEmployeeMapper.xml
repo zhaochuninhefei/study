@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.czhao.test.jdk11.db.dao.TbEmployeeMapper">
+  <resultMap id="BaseResultMap" type="com.czhao.test.jdk11.db.po.TbEmployee">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="employee_name" jdbcType="VARCHAR" property="employeeName" />
+    <result column="employee_sex" jdbcType="TINYINT" property="employeeSex" />
+    <result column="employee_entry_ymd" jdbcType="DATE" property="employeeEntryYmd" />
+    <result column="employee_level" jdbcType="TINYINT" property="employeeLevel" />
+    <result column="employee_org_id" jdbcType="INTEGER" property="employeeOrgId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, employee_name, employee_sex, employee_entry_ymd, employee_level, employee_org_id
+  </sql>
+  <select id="selectByExample" parameterType="com.czhao.test.jdk11.db.po.TbEmployeeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tb_employee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_employee
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_employee
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.czhao.test.jdk11.db.po.TbEmployeeExample">
+    delete from tb_employee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.czhao.test.jdk11.db.po.TbEmployee">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_employee (employee_name, employee_sex, employee_entry_ymd, 
+      employee_level, employee_org_id)
+    values (#{employeeName,jdbcType=VARCHAR}, #{employeeSex,jdbcType=TINYINT}, #{employeeEntryYmd,jdbcType=DATE}, 
+      #{employeeLevel,jdbcType=TINYINT}, #{employeeOrgId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.czhao.test.jdk11.db.po.TbEmployee">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_employee
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="employeeName != null">
+        employee_name,
+      </if>
+      <if test="employeeSex != null">
+        employee_sex,
+      </if>
+      <if test="employeeEntryYmd != null">
+        employee_entry_ymd,
+      </if>
+      <if test="employeeLevel != null">
+        employee_level,
+      </if>
+      <if test="employeeOrgId != null">
+        employee_org_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="employeeName != null">
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeSex != null">
+        #{employeeSex,jdbcType=TINYINT},
+      </if>
+      <if test="employeeEntryYmd != null">
+        #{employeeEntryYmd,jdbcType=DATE},
+      </if>
+      <if test="employeeLevel != null">
+        #{employeeLevel,jdbcType=TINYINT},
+      </if>
+      <if test="employeeOrgId != null">
+        #{employeeOrgId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.czhao.test.jdk11.db.po.TbEmployeeExample" resultType="java.lang.Long">
+    select count(*) from tb_employee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_employee
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.employeeName != null">
+        employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeSex != null">
+        employee_sex = #{record.employeeSex,jdbcType=TINYINT},
+      </if>
+      <if test="record.employeeEntryYmd != null">
+        employee_entry_ymd = #{record.employeeEntryYmd,jdbcType=DATE},
+      </if>
+      <if test="record.employeeLevel != null">
+        employee_level = #{record.employeeLevel,jdbcType=TINYINT},
+      </if>
+      <if test="record.employeeOrgId != null">
+        employee_org_id = #{record.employeeOrgId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_employee
+    set id = #{record.id,jdbcType=INTEGER},
+      employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      employee_sex = #{record.employeeSex,jdbcType=TINYINT},
+      employee_entry_ymd = #{record.employeeEntryYmd,jdbcType=DATE},
+      employee_level = #{record.employeeLevel,jdbcType=TINYINT},
+      employee_org_id = #{record.employeeOrgId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.czhao.test.jdk11.db.po.TbEmployee">
+    update tb_employee
+    <set>
+      <if test="employeeName != null">
+        employee_name = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeSex != null">
+        employee_sex = #{employeeSex,jdbcType=TINYINT},
+      </if>
+      <if test="employeeEntryYmd != null">
+        employee_entry_ymd = #{employeeEntryYmd,jdbcType=DATE},
+      </if>
+      <if test="employeeLevel != null">
+        employee_level = #{employeeLevel,jdbcType=TINYINT},
+      </if>
+      <if test="employeeOrgId != null">
+        employee_org_id = #{employeeOrgId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.czhao.test.jdk11.db.po.TbEmployee">
+    update tb_employee
+    set employee_name = #{employeeName,jdbcType=VARCHAR},
+      employee_sex = #{employeeSex,jdbcType=TINYINT},
+      employee_entry_ymd = #{employeeEntryYmd,jdbcType=DATE},
+      employee_level = #{employeeLevel,jdbcType=TINYINT},
+      employee_org_id = #{employeeOrgId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

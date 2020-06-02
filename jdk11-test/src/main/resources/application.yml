@@ -1,0 +1,38 @@
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: shutdown
+mybatis:
+  mapper-locations: classpath:com/czhao/test/jdk11/db/mapper/*.xml
+server:
+  port: 30001
+spring:
+  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      auto-commit: true
+      connection-test-query: SELECT 1
+      connection-timeout: 30000
+      idle-timeout: 180000
+      max-lifetime: 1800000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      pool-name: HikariCP-ssc
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://localhost:3306/db_jdk11_test?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: overseas
+logging:
+  file: /home/work/sources/test/jdk11-test/logs/ssc.log
+  level:
+    com:
+      czhao:
+        test: debug
+    org: warn
+    root: warn
+

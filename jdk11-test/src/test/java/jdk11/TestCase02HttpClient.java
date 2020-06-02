@@ -165,12 +165,11 @@ public class TestCase02HttpClient {
 
     private void testLogin() throws Exception {
         var client = HttpClient.newHttpClient();
-        // 母巢测试环境登录URL
-        var urlLogin = "http://172.17.4.118:9001/warpgate/api/open/login";
+        // 测试环境登录URL
+        var urlLogin = "http://<host>:<port>/xxx/login";
         var requestObj = new HashMap<String, Object>();
-        requestObj.put("username", "zhaochun");
-        requestObj.put("password", "d131039c500dd5317b88796940344673");
-        requestObj.put("forceLdapPassword", false);
+        requestObj.put("username", "xxx");
+        requestObj.put("password", "xxxxxxxxxx");
         var objectMapper = new ObjectMapper();
         var requestBodyJson = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(requestObj);
         var requestLogin = HttpRequest.newBuilder()
@@ -186,8 +185,8 @@ public class TestCase02HttpClient {
         var mpLoginResponse = objectMapper.readValue(loginResponse, Map.class);
         var dataLogin = (Map<String, Object>) mpLoginResponse.get("data");
         var token = dataLogin.get("token").toString();
-        // 母巢测试环境获取用户认证信息URL
-        var urlGetResource = "http://172.17.4.118:9001/warpgate/api/open/authority";
+        // 测试环境资源访问URL
+        var urlGetResource = "http://<host>:<port>/xxx/xxx";
         var requestRes = HttpRequest.newBuilder()
                 .uri(URI.create(urlGetResource))
                 .header("Content-Type", "application/json;charset=UTF-8")

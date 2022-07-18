@@ -1,6 +1,8 @@
 package com.czhao.test.jdk12;
 
 /**
+ * JEP 325: Switch Expressions (Preview)
+ *
  * @author zhaochun
  */
 public class TestSwitch {

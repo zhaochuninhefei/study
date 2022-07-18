@@ -1,6 +1,8 @@
 package com.czhao.test.jdk13;
 
 /**
+ * JEP 354: Switch Expressions (Second Preview)
+ *
  * @author zhaochun
  */
 public class TestSwitch354 {

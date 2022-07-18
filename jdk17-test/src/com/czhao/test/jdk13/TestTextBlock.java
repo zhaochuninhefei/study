@@ -1,10 +1,10 @@
 package com.czhao.test.jdk13;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 /**
+ * JEP 355: Text Blocks (Preview)
+ *
  * @author zhaochun
  */
 public class TestTextBlock {

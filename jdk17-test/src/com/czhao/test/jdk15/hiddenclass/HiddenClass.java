@@ -9,4 +9,11 @@ public class HiddenClass {
     public String sayHello(String name) {
         return "Hello, " + name;
     }
+
+    public static void printHello(String name) {
+        System.out.printf("""
+                Hello, %s !
+                Hello, HiddenClass !
+                %n""", name);
+    }
 }

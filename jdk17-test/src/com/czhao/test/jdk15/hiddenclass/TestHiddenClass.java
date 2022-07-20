@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 import java.util.Base64;
 
 /**
+ * JEP 371: Hidden Classes
+ *
  * @author zhaochun
  */
 public class TestHiddenClass {

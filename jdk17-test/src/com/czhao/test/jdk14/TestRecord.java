@@ -37,9 +37,15 @@ public class TestRecord {
             }
         }
 
+        // 实现接口
         @Override
         public int compare(Point o1, Point o2) {
-            return 0;
+            return Integer.compare(o1.sum(), o2.sum());
+        }
+
+        // 定义实例方法
+        public int sum() {
+            return x + y;
         }
     }
 

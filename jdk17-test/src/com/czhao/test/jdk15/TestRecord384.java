@@ -26,7 +26,7 @@ public class TestRecord384 {
     public record NegExpr(Expr e) implements Expr {
     }
 
-    List<Integer> findMaxNumber(List<String> numbers) {
+    private List<Integer> findMaxNumber(List<String> numbers) {
         // 声明一个本地Record
         record NumberRecord(String numberStr, int number) {
         }

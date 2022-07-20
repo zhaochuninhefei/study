@@ -1,6 +1,7 @@
 package com.czhao.test.jdk14;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,11 +28,18 @@ public class TestRecord {
         System.out.println(pointGrp.toString());
     }
 
-    record Point(int x, int y) {
+    record Point(int x, int y) implements Comparator<Point> {
+        // 构造函数可以声明为没有正式形参列表的形式，此时默认使用完整的状态参数列表。
+        // 这允许构造函数只执行参数的验证和规范化，而省略显式的字段初始化。
         Point {
             if (x < 0 || y < 0) {
                 throw new RuntimeException("坐标只能位于第一象限");
             }
+        }
+
+        @Override
+        public int compare(Point o1, Point o2) {
+            return 0;
         }
     }
 

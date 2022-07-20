@@ -28,6 +28,11 @@ public class TestRecord {
     }
 
     record Point(int x, int y) {
+        Point {
+            if (x < 0 || y < 0) {
+                throw new RuntimeException("坐标只能位于第一象限");
+            }
+        }
     }
 
     record PointGrp(List<Point> points, String grpName) {

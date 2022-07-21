@@ -46,6 +46,18 @@ public class TestRandomGenerator {
         RandomGenerator xoshiro256PlusPlus = RandomGeneratorFactory.of("Xoshiro256PlusPlus").create();
         System.out.println(xoshiro256PlusPlus.nextInt());
 
+        // L128X256MixRandom 伪随机数生成器(LXM PRNG算法家族之一)
+        RandomGenerator l128X256MixRandom = RandomGeneratorFactory.of("L128X256MixRandom").create();
+        System.out.println(l128X256MixRandom.nextInt());
+
+        // L128X128MixRandom 伪随机数生成器(LXM PRNG算法家族之一)
+        RandomGenerator l128X128MixRandom = RandomGeneratorFactory.of("L128X128MixRandom").create();
+        System.out.println(l128X128MixRandom.nextInt());
+
+        // L128X1024MixRandom 伪随机数生成器(LXM PRNG算法家族之一)
+        RandomGenerator l128X1024MixRandom = RandomGeneratorFactory.of("L128X1024MixRandom").create();
+        System.out.println(l128X1024MixRandom.nextInt());
+
         // L64X256MixRandom 伪随机数生成器(LXM PRNG算法家族之一)
         RandomGenerator l64X256MixRandom = RandomGeneratorFactory.of("L64X256MixRandom").create();
         System.out.println(l64X256MixRandom.nextInt());
@@ -66,16 +78,8 @@ public class TestRandomGenerator {
         RandomGenerator l32X64MixRandom = RandomGeneratorFactory.of("L32X64MixRandom").create();
         System.out.println(l32X64MixRandom.nextInt());
 
-        // L128X256MixRandom 伪随机数生成器(LXM PRNG算法家族之一)
-        RandomGenerator l128X256MixRandom = RandomGeneratorFactory.of("L128X256MixRandom").create();
-        System.out.println(l128X256MixRandom.nextInt());
-
-        // L128X128MixRandom 伪随机数生成器(LXM PRNG算法家族之一)
-        RandomGenerator l128X128MixRandom = RandomGeneratorFactory.of("L128X128MixRandom").create();
-        System.out.println(l128X128MixRandom.nextInt());
-
-        // L128X1024MixRandom 伪随机数生成器(LXM PRNG算法家族之一)
-        RandomGenerator l128X1024MixRandom = RandomGeneratorFactory.of("L128X1024MixRandom").create();
-        System.out.println(l128X1024MixRandom.nextInt());
+        // JDK17默认随机数生成器 L32X64MixRandom
+        RandomGenerator generator = RandomGenerator.getDefault();
+        System.out.println(generator.nextInt());
     }
 }

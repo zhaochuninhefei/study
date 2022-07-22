@@ -6,9 +6,16 @@ package com.czhao.test.jdk17;
  * @author zhaochun
  */
 public class TestPatternMatchSwitch {
+    public static void main(String[] args) {
+        TestPatternMatchSwitch me = new TestPatternMatchSwitch();
+        System.out.println(me.test01(100));;
+        System.out.println(me.test01("asdf"));;
+        System.out.println(me.test01(null));;
+    }
 
     private String test01(Object o) {
         return switch (o) {
+            case null -> "null";
             case Integer i -> String.format("Integer i : %s", i);
             case Long l -> String.format("Long l : %s", l);
             case Double d -> String.format("Double d : %s", d);

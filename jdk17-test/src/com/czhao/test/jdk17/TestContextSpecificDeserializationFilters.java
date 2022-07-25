@@ -37,8 +37,7 @@ public class TestContextSpecificDeserializationFilters {
     }
 
     private void readPersonWithoutFilter(byte[] bytes) {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
             Object object = objectInputStream.readObject();
             System.out.println(object.toString());
         } catch (IOException | ClassNotFoundException e) {
@@ -47,8 +46,7 @@ public class TestContextSpecificDeserializationFilters {
     }
 
     private void readPersonWithFilter(byte[] bytes, String... classPtns) {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
             // 编写过滤条件: 允许 classPtns 指定的所有类，允许`java.base`模块下的所有类，禁止其他类。
             String ptn = String.join(";", classPtns) + ";java.base/*;!*";
             ObjectInputFilter filter = ObjectInputFilter.Config.createFilter(ptn);

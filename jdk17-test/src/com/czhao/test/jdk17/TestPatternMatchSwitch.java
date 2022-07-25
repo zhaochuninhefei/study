@@ -8,12 +8,12 @@ package com.czhao.test.jdk17;
 public class TestPatternMatchSwitch {
     public static void main(String[] args) {
         TestPatternMatchSwitch me = new TestPatternMatchSwitch();
-        System.out.println(me.test01(100));
-        System.out.println(me.test01("test"));
-        System.out.println(me.test01(null));
+        System.out.println(me.testPatternMatchSwitch(100));
+        System.out.println(me.testPatternMatchSwitch("test"));
+        System.out.println(me.testPatternMatchSwitch(null));
     }
 
-    private String test01(Object o) {
+    private String testPatternMatchSwitch(Object o) {
         return switch (o) {
             case null -> "o is null!";
             case Integer i -> String.format("Integer i : %s", i);

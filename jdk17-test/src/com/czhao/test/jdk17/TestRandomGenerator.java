@@ -111,11 +111,15 @@ public class TestRandomGenerator {
         System.out.println("L64X1024MixRandom : " + l64X1024MixRandom.nextInt());
 
         // L32X64MixRandom 伪随机数生成器(LXM PRNG算法家族之一)
+        //  L32X64MixRandom的实现有BUG，无论是否显式指定种子，其首个随机数都是一样的。
+        //  参考: https://stackoverflow.com/questions/72146414/default-algo-for-randomgenerator-l32x64mixrandom-generates-the-same-number-eac
+        //       https://bugs.openjdk.org/browse/JDK-8282551
         RandomGenerator l32X64MixRandom = RandomGeneratorFactory.of("L32X64MixRandom").create(LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli());
         System.out.println("L32X64MixRandom : " + l32X64MixRandom.nextInt());
         System.out.println("L32X64MixRandom : " + l32X64MixRandom.nextInt());
 
         // JDK17默认随机数生成器 L32X64MixRandom
+        //  与L32X64MixRandom有同样的BUG： 无论是否显式指定种子，其首个随机数都是一样的。
         RandomGenerator generator = RandomGenerator.getDefault();
         System.out.println("RandomGenerator Default : " + generator.nextInt());
         System.out.println("RandomGenerator Default : " + generator.nextInt());

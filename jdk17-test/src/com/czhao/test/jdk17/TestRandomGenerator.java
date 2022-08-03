@@ -52,11 +52,12 @@ public class TestRandomGenerator {
         System.out.println("ThreadLocalRandom in main thread : " + ThreadLocalRandom.current().nextInt());
         ExecutorService executorService = Executors.newFixedThreadPool(5);
         for (int i = 0; i < 10; i++) {
+            SplittableRandom splittableRandomSub = splittableRandom.split();
             executorService.submit(() -> {
                 System.out.println("ThreadLocalRandom in sub thread : " + ThreadLocalRandom.current().nextInt());
                 System.out.println("ThreadLocalRandom in sub thread : " + ThreadLocalRandom.current().nextInt());
-                System.out.println("SplittableRandom in sub thread : " + splittableRandom.split().nextInt());
-                System.out.println("SplittableRandom in sub thread : " + splittableRandom.split().nextInt());
+                System.out.println("SplittableRandom in sub thread : " + splittableRandomSub.nextInt());
+                System.out.println("SplittableRandom in sub thread : " + splittableRandomSub.nextInt());
             });
         }
         executorService.shutdown();

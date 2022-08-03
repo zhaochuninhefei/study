@@ -45,7 +45,7 @@ public class TestRandomGenerator {
         System.out.println("Random : " + random.nextInt());
 
         // SplittableRandom 伪随机数生成器(SplitMix算法)
-        //  默认使用黄金比例生成种子，这里改为用 secureRandom生成的密码学安全的伪随机数作为种子
+        //  默认使用黄金比例((1+sqrt(5))/2)生成种子，这里改为用 secureRandom生成的密码学安全的伪随机数作为种子
         SplittableRandom splittableRandom = (SplittableRandom)RandomGeneratorFactory.of("SplittableRandom").create(secureRandom.nextLong());
         System.out.println("SplittableRandom in main thread : " + splittableRandom.nextInt());
         System.out.println("SplittableRandom in main thread : " + splittableRandom.nextInt());
@@ -70,61 +70,61 @@ public class TestRandomGenerator {
         }
 
         // Xoroshiro128PlusPlus 伪随机数生成器(xoshiro/xoroshiro算法之一)
-        //  默认使用"黄金比例 (1+sqrt(5))/2 的前 64 位，强制为奇数"生成种子
+        //  默认使用黄金比例((1+sqrt(5))/2)生成种子
         RandomGenerator xoroshiro128PlusPlus = RandomGeneratorFactory.of("Xoroshiro128PlusPlus").create();
         System.out.println("Xoroshiro128PlusPlus : " + xoroshiro128PlusPlus.nextInt());
         System.out.println("Xoroshiro128PlusPlus : " + xoroshiro128PlusPlus.nextInt());
 
         // Xoshiro256PlusPlus 伪随机数生成器(xoshiro/xoroshiro算法之一)
-        //  默认使用"黄金比例 (1+sqrt(5))/2 的前 64 位，强制为奇数"生成种子，这里改为secureRandom生成的密码学安全的伪随机数作为种子
+        //  默认使用黄金比例((1+sqrt(5))/2)生成种子，这里改为secureRandom生成的密码学安全的伪随机数作为种子
         RandomGenerator xoshiro256PlusPlus = RandomGeneratorFactory.of("Xoshiro256PlusPlus").create(secureRandom.nextLong());
         System.out.println("Xoshiro256PlusPlus : " + xoshiro256PlusPlus.nextInt());
         System.out.println("Xoshiro256PlusPlus : " + xoshiro256PlusPlus.nextInt());
 
         // L128X256MixRandom 伪随机数生成器(LXM PRNG算法家族之一)
-        //  默认使用"黄金比例 (1+sqrt(5))/2 的前 64 位，强制为奇数"生成种子
+        //  默认使用黄金比例((1+sqrt(5))/2)生成种子
         RandomGenerator l128X256MixRandom = RandomGeneratorFactory.of("L128X256MixRandom").create();
         System.out.println("L128X256MixRandom : " + l128X256MixRandom.nextInt());
         System.out.println("L128X256MixRandom : " + l128X256MixRandom.nextInt());
 
         // L128X128MixRandom 伪随机数生成器(LXM PRNG算法家族之一)
-        //  默认使用"黄金比例 (1+sqrt(5))/2 的前 64 位，强制为奇数"生成种子，这里改为secureRandom生成的密码学安全的伪随机数作为种子
+        //  默认使用黄金比例((1+sqrt(5))/2)生成种子，这里改为secureRandom生成的密码学安全的伪随机数作为种子
         RandomGenerator l128X128MixRandom = RandomGeneratorFactory.of("L128X128MixRandom").create(secureRandom.nextLong());
         System.out.println("L128X128MixRandom : " + l128X128MixRandom.nextInt());
         System.out.println("L128X128MixRandom : " + l128X128MixRandom.nextInt());
 
         // L128X1024MixRandom 伪随机数生成器(LXM PRNG算法家族之一)
-        //  默认使用"黄金比例 (1+sqrt(5))/2 的前 64 位，强制为奇数"生成种子
+        //  默认使用黄金比例((1+sqrt(5))/2)生成种子
         RandomGenerator l128X1024MixRandom = RandomGeneratorFactory.of("L128X1024MixRandom").create();
         System.out.println("L128X1024MixRandom : " + l128X1024MixRandom.nextInt());
         System.out.println("L128X1024MixRandom : " + l128X1024MixRandom.nextInt());
 
         // L64X256MixRandom 伪随机数生成器(LXM PRNG算法家族之一)
-        //  默认使用"黄金比例 (1+sqrt(5))/2 的前 64 位，强制为奇数"生成种子
+        //  默认使用黄金比例((1+sqrt(5))/2)生成种子
         RandomGenerator l64X256MixRandom = RandomGeneratorFactory.of("L64X256MixRandom").create();
         System.out.println("L64X256MixRandom : " + l64X256MixRandom.nextInt());
         System.out.println("L64X256MixRandom : " + l64X256MixRandom.nextInt());
 
         // L64X128StarStarRandom 伪随机数生成器(LXM PRNG算法家族之一)
-        //  默认使用"黄金比例 (1+sqrt(5))/2 的前 64 位，强制为奇数"生成种子
+        //  默认使用黄金比例((1+sqrt(5))/2)生成种子
         RandomGenerator l64X128StarStarRandom = RandomGeneratorFactory.of("L64X128StarStarRandom").create();
         System.out.println("L64X128StarStarRandom : " + l64X128StarStarRandom.nextInt());
         System.out.println("L64X128StarStarRandom : " + l64X128StarStarRandom.nextInt());
 
         // L64X128MixRandom 伪随机数生成器(LXM PRNG算法家族之一)
-        //  默认使用"黄金比例 (1+sqrt(5))/2 的前 64 位，强制为奇数"生成种子
+        //  默认使用黄金比例((1+sqrt(5))/2)生成种子
         RandomGenerator l64X128MixRandom = RandomGeneratorFactory.of("L64X128MixRandom").create();
         System.out.println("L64X128MixRandom : " + l64X128MixRandom.nextInt());
         System.out.println("L64X128MixRandom : " + l64X128MixRandom.nextInt());
 
         // L64X1024MixRandom 伪随机数生成器(LXM PRNG算法家族之一)
-        //  默认使用"黄金比例 (1+sqrt(5))/2 的前 64 位，强制为奇数"生成种子
+        //  默认使用黄金比例((1+sqrt(5))/2)生成种子
         RandomGenerator l64X1024MixRandom = RandomGeneratorFactory.of("L64X1024MixRandom").create();
         System.out.println("L64X1024MixRandom : " + l64X1024MixRandom.nextInt());
         System.out.println("L64X1024MixRandom : " + l64X1024MixRandom.nextInt());
 
         // L32X64MixRandom 伪随机数生成器(LXM PRNG算法家族之一)
-        //  默认使用"黄金比例 (1+sqrt(5))/2 的前 64 位，强制为奇数"生成种子
+        //  默认使用黄金比例((1+sqrt(5))/2)生成种子
         //  L32X64MixRandom的实现有BUG，无论是否显式指定种子，其首个随机数都是一样的。
         //  参考: https://stackoverflow.com/questions/72146414/default-algo-for-randomgenerator-l32x64mixrandom-generates-the-same-number-eac
         //       https://bugs.openjdk.org/browse/JDK-8282551

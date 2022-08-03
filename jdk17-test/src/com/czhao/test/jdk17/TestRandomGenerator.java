@@ -1,5 +1,6 @@
 package com.czhao.test.jdk17;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Comparator;
@@ -32,21 +33,21 @@ public class TestRandomGenerator {
                         factory.isJumpable(),
                         factory.isSplittable()));
 
-        // Random,伪随机数生成器(线性同余算法)
+        // SecureRandom 密码学安全的伪随机数生成器(CSPRNG)
+        SecureRandom secureRandom = (SecureRandom)RandomGeneratorFactory.of("SecureRandom").create();
+        System.out.println("SecureRandom : " + secureRandom.nextInt());
+        System.out.println("SecureRandom : " + secureRandom.nextInt());
+
+        // Random,伪随机数生成器(线性同余算法) 默认使用当前时间戳生成种子(并不是直接使用时间戳)
         RandomGenerator random = RandomGeneratorFactory.of("Random").create();
         System.out.println("Random : " + random.nextInt());
         System.out.println("Random : " + random.nextInt());
 
-        // SecureRandom 密码学强随机数生成器(RNG)
-        RandomGenerator secureRandom = RandomGeneratorFactory.of("SecureRandom").create();
-        System.out.println("SecureRandom : " + secureRandom.nextInt());
-        System.out.println("SecureRandom : " + secureRandom.nextInt());
-
-        // SplittableRandom 伪随机数生成器(SplitMix算法)
-        SplittableRandom splittableRandom = (SplittableRandom)RandomGeneratorFactory.of("SplittableRandom").create();
+        // SplittableRandom 伪随机数生成器(SplitMix算法) 默认使用黄金比例生成种子，这里改为用 secureRandom生成的密码学安全的伪随机数作为种子
+        SplittableRandom splittableRandom = (SplittableRandom)RandomGeneratorFactory.of("SplittableRandom").create(secureRandom.nextLong());
         System.out.println("SplittableRandom in main thread : " + splittableRandom.nextInt());
         System.out.println("SplittableRandom in main thread : " + splittableRandom.nextInt());
-        // ThreadLocalRandom,伪随机数生成器(SplitMix算法)
+        // ThreadLocalRandom,伪随机数生成器(SplitMix算法) 使用内部种子
         System.out.println("ThreadLocalRandom in main thread : " + ThreadLocalRandom.current().nextInt());
         System.out.println("ThreadLocalRandom in main thread : " + ThreadLocalRandom.current().nextInt());
         ExecutorService executorService = Executors.newFixedThreadPool(5);
@@ -114,7 +115,7 @@ public class TestRandomGenerator {
         //  L32X64MixRandom的实现有BUG，无论是否显式指定种子，其首个随机数都是一样的。
         //  参考: https://stackoverflow.com/questions/72146414/default-algo-for-randomgenerator-l32x64mixrandom-generates-the-same-number-eac
         //       https://bugs.openjdk.org/browse/JDK-8282551
-        RandomGenerator l32X64MixRandom = RandomGeneratorFactory.of("L32X64MixRandom").create(LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli());
+        RandomGenerator l32X64MixRandom = RandomGeneratorFactory.of("L32X64MixRandom").create(secureRandom.nextLong());
         System.out.println("L32X64MixRandom : " + l32X64MixRandom.nextInt());
         System.out.println("L32X64MixRandom : " + l32X64MixRandom.nextInt());
 

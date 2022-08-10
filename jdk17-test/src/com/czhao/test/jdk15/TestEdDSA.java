@@ -19,7 +19,7 @@ public class TestEdDSA {
     }
     /**
      * EdDSA是`Edwards-curve Digital Signature Algorithm`的缩写，意思是爱德华曲线数字签名算法。
-     * 爱德华曲线是一种椭圆曲线，比如`Curve25519`。
+     * 爱德华曲线是一种特殊的椭圆曲线，比如`Edwards25519`，它是蒙哥马利曲线`Curve25519`的等价变换曲线。(蒙哥马利曲线是另一种特殊的椭圆曲线。)
      */
     private void testEdDSA(String msg) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         // 获取明文字节数组

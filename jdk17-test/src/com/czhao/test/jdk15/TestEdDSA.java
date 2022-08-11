@@ -56,7 +56,7 @@ public class TestEdDSA {
     private void testECDSA(String msg) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         // 明文
         byte[] plaintext = msg.getBytes(StandardCharsets.UTF_8);
-        // 使用椭圆曲线 EC 生成公私钥
+        // 使用椭圆曲线 EC 生成公私钥 默认使用 NIST P-256 曲线
         KeyPairGenerator kpg = KeyPairGenerator.getInstance("EC");
         KeyPair kp = kpg.generateKeyPair();
         // 指定签名算法 SHA256withECDSA

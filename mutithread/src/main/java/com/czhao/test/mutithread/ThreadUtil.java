@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  */
 public class ThreadUtil {
 
-    public static final String RANDOM_FILES_PATH = "/home/work/sources/test/workdir/randomFiles";
+    public static final String RANDOM_FILES_PATH = "./randomFiles";
 
     public static void writeRandomNumberFile(int randomNumber, String threadName) {
         LocalDateTime now = LocalDateTime.now();

@@ -14,5 +14,12 @@ public class TestEncoding {
 
         System.out.println("file.encoding: " + System.getProperty("file.encoding"));
         System.out.println("native.encoding: " + System.getProperty("native.encoding"));
+
+        try {
+            Charset.forName("default");
+        } catch (Exception e) {
+            // UnsupportedCharsetException
+            e.printStackTrace();
+        }
     }
 }

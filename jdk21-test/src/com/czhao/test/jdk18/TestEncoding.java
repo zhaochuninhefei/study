@@ -1,6 +1,5 @@
 package com.czhao.test.jdk18;
 
-import java.io.Console;
 import java.nio.charset.Charset;
 
 /**

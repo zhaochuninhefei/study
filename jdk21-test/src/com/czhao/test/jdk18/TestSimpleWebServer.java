@@ -12,7 +12,7 @@ public class TestSimpleWebServer {
 
 
     /*
-        启动简易网络服务器:
+        命令方式启动简易网络服务器:
         $ cd ${JDK21_HOME}/bin
         $ ./jwebserver
         $ 默认情况下绑定到环回。如果要表示所有接口，请使用 "-b 0.0.0.0" 或 "-b ::"。
@@ -26,6 +26,9 @@ public class TestSimpleWebServer {
      */
 
 
+    /**
+     * API 方式启动简易网络服务器
+     */
     public static void main(String[] args) {
         TestSimpleWebServer me = new TestSimpleWebServer();
         me.startSimpleServer();

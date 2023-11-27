@@ -39,6 +39,23 @@ public class TestSnippet {
     }
 
     /**
+     * testSnippetHighlight
+     *
+     * <P>Use Sample:</P>
+     * {@snippet :
+     *     TestSnippet testSnippet = new TestSnippet(); // @highlight region regex = "\btestSnippet\b"
+     *     // call testSnippetHighlight
+     *     testSnippet.testSnippetHighlight(); // @highlight substring="testSnippetHighlight()"
+     *     testSnippet.testCodeInPre();
+     *     List<String> list = new ArrayList<>(); // @end
+     * }
+     *
+     */
+    public void testSnippetHighlight() {
+        System.out.println("testSnippetHighlight...");
+    }
+
+    /**
      * The following code shows how to use {@code Optional.isPresent}:
      * {@snippet file="ShowOptional.java" region="example"}
      */

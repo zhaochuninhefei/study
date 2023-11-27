@@ -38,4 +38,12 @@ public class TestSnippet {
         System.out.println("testSnippet...");
     }
 
+    /**
+     * The following code shows how to use {@code Optional.isPresent}:
+     * {@snippet file="ShowOptional.java" region="example"}
+     */
+    public void showOptional() {
+        System.out.println("showOptional...");
+    }
+
 }

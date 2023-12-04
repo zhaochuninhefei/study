@@ -1,6 +1,8 @@
 package com.czhao.test.jdk18;
 
+import java.io.IOException;
 import java.net.InetAddress;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 
@@ -10,7 +12,8 @@ import java.util.Arrays;
 public class TestInetAddress {
     public static void main(String[] args) {
         TestInetAddress me = new TestInetAddress();
-        me.test01();
+//        me.test01();
+        me.test02();
     }
 
     private void test01() {
@@ -37,6 +40,14 @@ public class TestInetAddress {
             }
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void test02() {
+        try (var stream = new URL("http://justtest.com:8080").openStream()) {
+            stream.transferTo(System.out);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

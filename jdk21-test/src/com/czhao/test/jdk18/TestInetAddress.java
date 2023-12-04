@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class TestInetAddress {
     public static void main(String[] args) {
         TestInetAddress me = new TestInetAddress();
-//        me.test01();
+        me.test01();
         me.test02();
     }
 

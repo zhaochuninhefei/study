@@ -42,7 +42,7 @@ public class TestInetAddress {
     }
 
     private void test02() {
-        try (var stream = new URI("http://justtest.com:8080").toURL().openStream()) {
+        try (var stream = new URI("https://justtest.com:8080").toURL().openStream()) {
             stream.transferTo(System.out);
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);

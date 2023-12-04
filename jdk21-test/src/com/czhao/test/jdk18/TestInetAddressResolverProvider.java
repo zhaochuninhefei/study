@@ -27,6 +27,7 @@ public class TestInetAddressResolverProvider extends InetAddressResolverProvider
         @Override
         public Stream<InetAddress> lookupByName(String host,
                                                 LookupPolicy lookupPolicy) throws UnknownHostException {
+            System.out.println("lookupByName in TestInetAddressResolver");
             if (Objects.equals(host, "justtest.com")) {
                 System.out.println("find justtest.com");
                 return Stream.of(InetAddress.getLocalHost());
@@ -36,6 +37,7 @@ public class TestInetAddressResolverProvider extends InetAddressResolverProvider
 
         @Override
         public String lookupByAddress(byte[] addr) throws UnknownHostException {
+            System.out.println("lookupByAddress in TestInetAddressResolver");
             return this.builtinResolver.lookupByAddress(addr);
         }
     }

@@ -14,6 +14,8 @@ public class TestInetAddress {
         me.test02();
     }
 
+    // InetAddress 功能演示
+    // InetAddress 不是 java18新特性，一直就有
     private void test01() {
         // 根据 IP 查找 hostname
         var addressBytes = new byte[] { 127, 0, 0, 1 };
@@ -41,6 +43,7 @@ public class TestInetAddress {
         }
     }
 
+    // 比较 注册 TestInetAddressResolverProvider 前后的区别
     private void test02() {
         try (var stream = new URI("https://justtest.com:8080").toURL().openStream()) {
             stream.transferTo(System.out);

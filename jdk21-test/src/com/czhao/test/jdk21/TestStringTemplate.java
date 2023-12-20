@@ -49,22 +49,24 @@ public class TestStringTemplate {
         System.out.println(msg);
 
         // 嵌入式表达式内部语句可以换行
-        String time = STR."The time is \{
+        String time = STR. "The time is \{
                 // The java.time.format package is very useful
                 DateTimeFormatter
                         .ofPattern("HH:mm:ss")
                         .format(LocalTime.now())
-                } right now";
+                } right now" ;
         System.out.println(time);
 
         // 嵌入的表达式可以是后缀递增表达式
         int index = 0;
-        String data = STR."\{index++}, \{index++}, \{index++}, \{index++}";
+        String data = STR. "\{ index++ }, \{ index++ }, \{ index++ }, \{ index++ }" ;
         System.out.println(data);
 
-        // 嵌入的表达式是（嵌套的）模板表达式
-        String[] fruit = { "apples", "oranges", "peaches" };
-        String temp = STR."\{fruit[0]}, \{STR."\{fruit[1]}, \{fruit[2]}"}";
+        // 嵌入的表达式可以又是一个String Template，即可以嵌套模板表达式
+        String[] fruit = {"apples", "oranges", "peaches"};
+        String temp = STR. "\{ fruit[0] }, \{
+                STR. "\{ fruit[1] }, \{ fruit[2] }"
+                }" ;
         System.out.println(temp);
     }
 

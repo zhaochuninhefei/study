@@ -1,6 +1,8 @@
 package com.czhao.test.jdk21;
 
 import java.io.File;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import static java.lang.StringTemplate.STR;
 
@@ -45,6 +47,25 @@ public class TestStringTemplate {
         File file = new File(filePath);
         String msg = STR. "The file \{ filePath } \{ file.exists() ? "does" : "does not" } exist" ;
         System.out.println(msg);
+
+        // 嵌入式表达式内部语句可以换行
+        String time = STR."The time is \{
+                // The java.time.format package is very useful
+                DateTimeFormatter
+                        .ofPattern("HH:mm:ss")
+                        .format(LocalTime.now())
+                } right now";
+        System.out.println(time);
+
+        // 嵌入的表达式可以是后缀递增表达式
+        int index = 0;
+        String data = STR."\{index++}, \{index++}, \{index++}, \{index++}";
+        System.out.println(data);
+
+        // 嵌入的表达式是（嵌套的）模板表达式
+        String[] fruit = { "apples", "oranges", "peaches" };
+        String temp = STR."\{fruit[0]}, \{STR."\{fruit[1]}, \{fruit[2]}"}";
+        System.out.println(temp);
     }
 
     private String getSomething() {

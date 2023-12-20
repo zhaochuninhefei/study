@@ -40,7 +40,7 @@ public class TestStringTemplate {
         System.out.println(line1);
         System.out.println(line2);
 
-        // 直接在内部使用双引号
+        // 嵌入式表达式内部可以使用双引号字符而无需对其进行转义
         String filePath = "tmp.dat";
         File file = new File(filePath);
         String msg = STR. "The file \{ filePath } \{ file.exists() ? "does" : "does not" } exist" ;

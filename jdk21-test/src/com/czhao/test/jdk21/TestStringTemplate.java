@@ -12,8 +12,10 @@ import static java.lang.StringTemplate.STR;
 public class TestStringTemplate {
     public static void main(String[] args) {
         TestStringTemplate me = new TestStringTemplate();
-//        me.test01();
+        me.test01();
         me.testHtmlTemplate();
+        me.testJsonTemplate();
+        me.testMdTemplate();
     }
 
     private void test01() {
@@ -80,17 +82,54 @@ public class TestStringTemplate {
 
     private void testHtmlTemplate() {
         String title = "My Web Page";
-        String text  = "Hello, world";
-        String html = STR."""
-        <html>
-          <head>
-            <title>\{title}</title>
-          </head>
-          <body>
-            <p>\{text}</p>
-          </body>
-        </html>
-        """;
+        String text = "Hello, world";
+        String html = STR. """
+            <html>
+              <head>
+                <title>\{ title }</title>
+              </head>
+              <body>
+                <p>\{ text }</p>
+              </body>
+            </html>
+            """ ;
         System.out.println(html);
+    }
+
+    private void testJsonTemplate() {
+        String name = "Joan Smith";
+        String phone = "555-123-4567";
+        String address = "1 Maple Drive, Anytown";
+        String json = STR. """
+            {
+                "name":    "\{ name }",
+                "phone":   "\{ phone }",
+                "address": "\{ address }"
+            }
+            """ ;
+        System.out.println(json);
+    }
+
+    private void testMdTemplate() {
+        record Rectangle(String name, double width, double height) {
+            double area() {
+                return width * height;
+            }
+        }
+        Rectangle[] zone = new Rectangle[] {
+                new Rectangle("Alfa", 17.8, 31.4),
+                new Rectangle("Bravo", 9.6, 12.4),
+                new Rectangle("Charlie", 7.1, 11.23),
+        };
+        String table = STR."""
+            | Description | Width | Height | Area |
+            | --- | --- | --- | --- |
+            | \{zone[0].name} | \{zone[0].width} | \{zone[0].height} | \{zone[0].area()} |
+            | \{zone[1].name} | \{zone[1].width} | \{zone[1].height} | \{zone[1].area()} |
+            | \{zone[2].name} | \{zone[2].width} | \{zone[2].height} | \{zone[2].area()} |
+
+            Total: \{zone[0].area() + zone[1].area() + zone[2].area()}
+            """;
+        System.out.println(table);
     }
 }

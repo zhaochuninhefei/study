@@ -12,7 +12,8 @@ import static java.lang.StringTemplate.STR;
 public class TestStringTemplate {
     public static void main(String[] args) {
         TestStringTemplate me = new TestStringTemplate();
-        me.test01();
+//        me.test01();
+        me.testHtmlTemplate();
     }
 
     private void test01() {
@@ -75,5 +76,21 @@ public class TestStringTemplate {
     }
 
     record Poetry(String author, String title) {
+    }
+
+    private void testHtmlTemplate() {
+        String title = "My Web Page";
+        String text  = "Hello, world";
+        String html = STR."""
+        <html>
+          <head>
+            <title>\{title}</title>
+          </head>
+          <body>
+            <p>\{text}</p>
+          </body>
+        </html>
+        """;
+        System.out.println(html);
     }
 }

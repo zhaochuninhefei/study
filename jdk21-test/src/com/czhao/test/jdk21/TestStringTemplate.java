@@ -31,11 +31,18 @@ public class TestStringTemplate {
         String s = STR."\{x} + \{y} = \{x + y}";
         System.out.println(s);
 
+        // 埋入方法，可访问的字段
+        Poetry p = new Poetry("李白", "少年行");
+        String line1 = STR."少年负\{getSomething()}，奋烈自有时。";
+        String line2 = STR."作者: \{p.author} 《\{p.title}》";
+        System.out.println(line1);
+        System.out.println(line2);
+    }
 
-//        // Embedded expressions can invoke methods and access fields
-//        String s = STR."You have a \{getOfferType()} waiting for you!";
-//
-//        String t = STR."Access at \{req.date} \{req.time} from \{req.ipAddress}";
+    private String getSomething() {
+        return "壮气";
+    }
 
+    record Poetry(String author, String title) {
     }
 }

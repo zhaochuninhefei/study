@@ -46,5 +46,11 @@ public class TestSequencedCollections {
         System.out.println(setSquenced);
         setSquenced.addLast("e");
         System.out.println(setSquenced);
+        // 已经存在的元素，会被移动到尾部
+        setSquenced.addLast("b");
+        System.out.println(setSquenced);
+        // 已经存在的元素被移动到头部
+        setSquenced.addFirst("b");
+        System.out.println(setSquenced);
     }
 }

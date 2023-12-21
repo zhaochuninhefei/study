@@ -19,6 +19,7 @@ public class TestRecordPattern {
         );
         printUpperLeftColoredPointNoNesting(r);
         printColorOfUpperLeftPointNesting(r);
+        printXCoordOfUpperLeftPointWithPatterns(r);
     }
 
     static void printSum(Object obj) {
@@ -28,15 +29,22 @@ public class TestRecordPattern {
     }
 
     static void printUpperLeftColoredPointNoNesting(Rectangle r) {
-        if (r instanceof Rectangle(ColoredPoint ul, ColoredPoint lr)) {
+        if (r instanceof Rectangle(ColoredPoint ul, ColoredPoint _)) {
             System.out.println(ul.c());
         }
     }
 
     static void printColorOfUpperLeftPointNesting(Rectangle r) {
-        if (r instanceof Rectangle(ColoredPoint(Point p, Color c),
-                                   ColoredPoint lr)) {
+        if (r instanceof Rectangle(ColoredPoint(Point _, Color c),
+                                   ColoredPoint _)) {
             System.out.println(c);
+        }
+    }
+
+    static void printXCoordOfUpperLeftPointWithPatterns(Rectangle r) {
+        if (r instanceof Rectangle(ColoredPoint(Point(var x, var _), var _),
+                                   var _)) {
+            System.out.println("左上角横坐标：" + x);
         }
     }
 

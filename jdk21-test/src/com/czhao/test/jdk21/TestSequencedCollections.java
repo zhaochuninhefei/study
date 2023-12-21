@@ -2,6 +2,7 @@ package com.czhao.test.jdk21;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 
 /**
@@ -21,6 +22,7 @@ public class TestSequencedCollections {
             me.test01(i + 1);
         }
         me.test02();
+        me.test03();
     }
 
     private void test01(int i) {
@@ -52,5 +54,21 @@ public class TestSequencedCollections {
         // 已经存在的元素被移动到头部
         setSquenced.addFirst("b");
         System.out.println(setSquenced);
+    }
+
+    private void test03() {
+        LinkedHashMap<String, String> mapSequenced = new LinkedHashMap<>();
+        mapSequenced.put("a", "a");
+        mapSequenced.put("b", "b");
+        mapSequenced.put("c", "c");
+        System.out.println(mapSequenced);
+        mapSequenced.putFirst("d", "d");
+        System.out.println(mapSequenced);
+        mapSequenced.putLast("e", "e");
+        System.out.println(mapSequenced);
+        mapSequenced.putLast("b", "b");
+        System.out.println(mapSequenced);
+        mapSequenced.putFirst("b", "b");
+        System.out.println(mapSequenced);
     }
 }

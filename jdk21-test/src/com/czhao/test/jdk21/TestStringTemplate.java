@@ -8,6 +8,8 @@ import static java.lang.StringTemplate.STR;
 import static java.util.FormatProcessor.FMT;
 
 /**
+ * 测试StringTemplate(需要将编译level调整为 Java21 Preview 预览版本)
+ *
  * @author zhaochun
  */
 public class TestStringTemplate {

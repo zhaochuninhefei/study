@@ -28,6 +28,9 @@ public class TestSequencedCollections {
         }
         System.out.println(setSquenced);
         System.out.println(setNotSquenced);
+
+        System.out.println("-----setSquenced 倒序:");
+        System.out.println(setSquenced.reversed());
     }
 
     // 定义一个长度为10的String数组类型的常量

@@ -20,6 +20,7 @@ public class TestSequencedCollections {
             System.out.println(STR. "----- i = \{ i } -----" );
             me.test01(i + 1);
         }
+        me.test02();
     }
 
     private void test01(int i) {
@@ -33,5 +34,17 @@ public class TestSequencedCollections {
         System.out.println("setSquenced 正序:" + setSquenced);
         System.out.println("setSquenced 倒序:" + setSquenced.reversed());
         System.out.println("setNotSquenced:" + setNotSquenced);
+    }
+
+    private void test02() {
+        LinkedHashSet<String> setSquenced = new LinkedHashSet<>();
+        setSquenced.add("a");
+        setSquenced.add("b");
+        setSquenced.add("c");
+        System.out.println(setSquenced);
+        setSquenced.addFirst("d");
+        System.out.println(setSquenced);
+        setSquenced.addLast("e");
+        System.out.println(setSquenced);
     }
 }

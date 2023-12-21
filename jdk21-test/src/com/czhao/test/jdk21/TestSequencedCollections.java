@@ -18,20 +18,15 @@ public class TestSequencedCollections {
         }
     }
 
-    @SuppressWarnings("ManualArrayToCollectionCopy")
     private void test01(int i) {
         LinkedHashSet<String> setSquenced = new LinkedHashSet<>();
-        // 按顺序从 STR 中获取元素并加入 setSquenced
+        HashSet<String> setNotSquenced = new HashSet<>();
+        // 按相同的顺序从 STR 中获取元素并加入 setSquenced 与 setNotSquenced
         for (int j = 0; j < i; j++) {
             setSquenced.add(C_SOME_STRINGS[j]);
-        }
-        System.out.println(setSquenced);
-
-        HashSet<String> setNotSquenced = new HashSet<>();
-        // 从 STR 中获取元素并加入 setNotSquenced
-        for (int j = 0; j < i; j++) {
             setNotSquenced.add(C_SOME_STRINGS[j]);
         }
+        System.out.println(setSquenced);
         System.out.println(setNotSquenced);
     }
 

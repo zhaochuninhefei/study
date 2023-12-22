@@ -1,5 +1,9 @@
 package com.czhao.test.jdk21;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author zhaochun
  */
@@ -7,6 +11,7 @@ public class TestSwitchPatternMatch {
     public static void main(String[] args) {
         TestSwitchPatternMatch me = new TestSwitchPatternMatch();
         me.testSwitchObject(null);
+        me.testSwitchObject(new Color[]{Color.RED, Color.BLUE});
         me.testSwitchEnum();
     }
 
@@ -41,6 +46,14 @@ public class TestSwitchPatternMatch {
             case Point p when p.i > 0 && p.j > 0 -> System.out.println("o is a point of the first quadrant: " + p);
             // 匹配 Point类型
             case Point p -> System.out.println("o is a point: " + p);
+
+            // 匹配 Color[]
+            case Color[] colors -> {
+                System.out.println("o is a color array:");
+                for (Color color : colors) {
+                    System.out.println(color);
+                }
+            }
 
             default -> System.out.println("unknown o");
         }

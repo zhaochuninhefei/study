@@ -113,14 +113,16 @@ public class TestSwitchPatternMatch {
         var result = switch (o) {
             case Integer i -> i;
             case String s when s.matches("^\\d+$") -> Integer.parseInt(s);
+            // 这里适合使用default保证穷尽
             default -> 0;
         };
         System.out.println("o: " + result);
 
-        int numLetters = switch (color) {   // 穷尽的!
+        int numLetters = switch (color) {
             case RED -> 3;
             case GREEN -> 5;
             case BLUE -> 6;
+            // 这里不推荐使用default保证穷尽，因为分支较少且明确
         };
         System.out.println("numLetters:" + numLetters);
     }

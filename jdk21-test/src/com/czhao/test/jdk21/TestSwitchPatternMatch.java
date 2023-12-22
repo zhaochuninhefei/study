@@ -113,7 +113,7 @@ public class TestSwitchPatternMatch {
         var result = switch (o) {
             case Integer i -> i;
             case String s when s.matches("^\\d+$") -> Integer.parseInt(s);
-            // 这里适合使用default保证穷尽
+            // 这里适合使用default保证穷尽，因为无法列举出所有可能的类型分支
             default -> 0;
         };
         System.out.println("o: " + result);
@@ -122,7 +122,7 @@ public class TestSwitchPatternMatch {
             case RED -> 3;
             case GREEN -> 5;
             case BLUE -> 6;
-            // 这里不推荐使用default保证穷尽，因为分支较少且明确
+            // 这里不推荐使用default保证穷尽，因为分支较少且明确，不加default有助于编译器检查switch分支有没有遗漏某个case。
         };
         System.out.println("numLetters:" + numLetters);
     }

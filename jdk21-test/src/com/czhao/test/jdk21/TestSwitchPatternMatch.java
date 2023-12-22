@@ -60,7 +60,7 @@ public class TestSwitchPatternMatch {
     }
 
     record Point(int i, int j) {}
-    enum Color { RED, GREEN, BLUE; }
+    enum Color { RED, GREEN, BLUE}
 
     private void testSwitchEnum() {
         var c = Coin.HEADS;

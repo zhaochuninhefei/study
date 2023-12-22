@@ -9,9 +9,6 @@ public class TestSwitchPatternMatch {
         me.testSwitchEnum();
     }
 
-    private static final Object CONST1 = "const1";
-    private static final Object CONST2 = "const2";
-
     private void testSwitchObject(Object o) {
         switch (o) {
             // 匹配 null

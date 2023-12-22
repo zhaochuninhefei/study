@@ -22,7 +22,7 @@ public class TestSwitchPatternMatch {
             case String s when s.startsWith("Prefix") -> System.out.println("o starts with Prefix.");
             // 匹配 String类型 + 正则表达式
             case String s when s.matches("^[0-9]+$") -> System.out.println("o is a digit.");
-            // 匹配 String类型
+            // 匹配 String类型 (这个String类型匹配不能放到"匹配 String类型 + 空字符串"的前面，否则会导致后续所有 String类型+when的匹配走不到,会引起编译错误)
             case String s -> System.out.println("o is a string: " + s);
 
             // 匹配 Integer类型 + 正数
@@ -51,6 +51,7 @@ public class TestSwitchPatternMatch {
                 }
             }
 
+            // default分支不能去掉，否则会导致switch不能穷尽所有可能
             default -> System.out.println("unknown o");
         }
     }

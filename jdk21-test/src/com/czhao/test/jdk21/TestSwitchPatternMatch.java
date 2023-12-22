@@ -6,10 +6,10 @@ package com.czhao.test.jdk21;
 public class TestSwitchPatternMatch {
     public static void main(String[] args) {
         TestSwitchPatternMatch me = new TestSwitchPatternMatch();
-        me.test01();
+        me.testSwitchEnum();
     }
 
-    private void test01() {
+    private void testSwitchEnum() {
         var c = Coin.HEADS;
         goodEnumSwitch1(c);
         goodEnumSwitch2(c);

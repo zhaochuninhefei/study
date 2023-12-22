@@ -20,37 +20,17 @@ public class TestSwitchPatternMatch {
 
     static void goodEnumSwitch1(Currency c) {
         switch (c) {
-            case Coin.HEADS -> {    // Qualified name of enum constant as a label
-                System.out.println("Heads");
-            }
-            case Coin.TAILS -> {
-                System.out.println("Tails");
-            }
+            case Coin.HEADS -> System.out.println("Heads");
+            case Coin.TAILS -> System.out.println("Tails");
+            default -> System.out.println("Some currency");
         }
     }
 
     static void goodEnumSwitch2(Coin c) {
         switch (c) {
-            case HEADS -> {
-                System.out.println("Heads");
-            }
-            case Coin.TAILS -> {    // Unnecessary qualification but allowed
-                System.out.println("Tails");
-            }
+            case HEADS -> System.out.println("Heads");
+            case TAILS -> System.out.println("Tails");
+            default -> System.out.println("Some currency");
         }
     }
-
-//    static void badEnumSwitch(Currency c) {
-//        switch (c) {
-//            case Coin.HEADS -> {
-//                System.out.println("Heads");
-//            }
-//            case TAILS -> {         // Error - TAILS must be qualified
-//                System.out.println("Tails");
-//            }
-//            default -> {
-//                System.out.println("Some currency");
-//            }
-//        }
-//    }
 }

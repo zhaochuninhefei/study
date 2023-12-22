@@ -9,6 +9,7 @@ public class TestSwitchPatternMatch {
         me.testSwitchObject(null);
         me.testSwitchObject(new Color[]{Color.RED, Color.BLUE});
         me.testSwitchString("1234");
+        me.testSwitchString(null);
         me.testSwitchEnum();
     }
 

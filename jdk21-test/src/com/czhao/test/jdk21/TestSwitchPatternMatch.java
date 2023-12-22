@@ -8,6 +8,7 @@ public class TestSwitchPatternMatch {
         TestSwitchPatternMatch me = new TestSwitchPatternMatch();
         me.testSwitchObject(null);
         me.testSwitchObject(new Color[]{Color.RED, Color.BLUE});
+        me.testSwitchString("1234");
         me.testSwitchEnum();
     }
 
@@ -58,6 +59,16 @@ public class TestSwitchPatternMatch {
 
     record Point(int i, int j) {}
     enum Color { RED, GREEN, BLUE}
+
+    private void testSwitchString(String s) {
+        switch (s) {
+            case null -> System.out.println("s is null");
+            case "const1", "const2" -> System.out.println("s is constant: " + s);
+            case String digit when digit.matches("^[0-9]+$") -> System.out.println("s is a digit.");
+            default -> System.out.println("default");
+        }
+    }
+
 
     private void testSwitchEnum() {
         var c = Coin.HEADS;

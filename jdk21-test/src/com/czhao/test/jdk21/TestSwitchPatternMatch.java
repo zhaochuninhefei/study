@@ -22,6 +22,11 @@ public class TestSwitchPatternMatch {
         me.testTypeCoverage("99", Color.GREEN);
         me.testTypeCoverage(-98, Color.BLUE);
         me.testTypeCoverage("asdf", Color.RED);
+
+        System.out.println("===== testSealedExhaustive =====");
+        me.testSealedExhaustive(new A());
+        me.testSealedExhaustive(new B());
+        me.testSealedExhaustive(new C(1));
     }
 
     private void testSwitchObject(Object o) {

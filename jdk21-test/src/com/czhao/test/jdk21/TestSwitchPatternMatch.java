@@ -6,6 +6,7 @@ package com.czhao.test.jdk21;
 public class TestSwitchPatternMatch {
     public static void main(String[] args) {
         TestSwitchPatternMatch me = new TestSwitchPatternMatch();
+        me.testSwitchObject(null);
         me.testSwitchEnum();
     }
 

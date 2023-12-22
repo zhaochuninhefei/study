@@ -17,6 +17,11 @@ public class TestSwitchPatternMatch {
 
         System.out.println("===== testSwitchEnum =====");
         me.testSwitchEnum();
+
+        System.out.println("===== testTypeCoverage =====");
+        me.testTypeCoverage("99", Color.GREEN);
+        me.testTypeCoverage(-98, Color.BLUE);
+        me.testTypeCoverage("asdf", Color.RED);
     }
 
     private void testSwitchObject(Object o) {
@@ -102,5 +107,21 @@ public class TestSwitchPatternMatch {
             case TAILS -> System.out.println("Tails");
             default -> System.out.println("Some currency");
         }
+    }
+
+    private void testTypeCoverage(Object o, Color color) {
+        var result = switch (o) {
+            case Integer i -> i;
+            case String s when s.matches("^\\d+$") -> Integer.parseInt(s);
+            default -> 0;
+        };
+        System.out.println("o: " + result);
+
+        int numLetters = switch (color) {   // 穷尽的!
+            case RED -> 3;
+            case GREEN -> 5;
+            case BLUE -> 6;
+        };
+        System.out.println("numLetters:" + numLetters);
     }
 }

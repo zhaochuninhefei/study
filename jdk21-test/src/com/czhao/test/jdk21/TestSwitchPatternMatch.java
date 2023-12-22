@@ -9,6 +9,48 @@ public class TestSwitchPatternMatch {
         me.testSwitchEnum();
     }
 
+    private static final Object CONST1 = "const1";
+    private static final Object CONST2 = "const2";
+
+    private void testSwitchObject(Object o) {
+        switch (o) {
+            // 匹配 null
+            case null -> System.out.println("o is null");
+
+            // 匹配 String类型 + 空字符串
+            case String s when s.isBlank() -> System.out.println("o is blank.");
+            // 匹配 String类型 + 前缀
+            case String s when s.startsWith("Prefix") -> System.out.println("o starts with Prefix.");
+            // 匹配 String类型 + 正则表达式
+            case String s when s.matches("^[0-9]+$") -> System.out.println("o is a digit.");
+            // 匹配 String类型
+            case String s -> System.out.println("o is a string: " + s);
+
+            // 匹配 Integer类型 + 正数
+            case Integer i when i > 0 -> System.out.println("o is a positive integer.");
+            // 匹配 Integer类型 + 负数
+            case Integer i when i < 0 -> System.out.println("o is a negative integer.");
+            // 匹配 Integer类型
+            case Integer _ -> System.out.println("o is zero.");
+
+            // 匹配long
+            case Long l -> System.out.println("o is a long: " + l);
+
+            // 匹配double
+            case Double d -> System.out.println("o is a double: " + d);
+
+            // 匹配 Point类型 + 坐标点位置
+            case Point p when p.i > 0 && p.j > 0 -> System.out.println("o is a point of the first quadrant: " + p);
+            // 匹配 Point类型
+            case Point p -> System.out.println("o is a point: " + p);
+
+            default -> System.out.println("unknown o");
+        }
+    }
+
+    record Point(int i, int j) {}
+    enum Color { RED, GREEN, BLUE; }
+
     private void testSwitchEnum() {
         var c = Coin.HEADS;
         goodEnumSwitch1(c);

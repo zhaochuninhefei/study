@@ -6,10 +6,16 @@ package com.czhao.test.jdk21;
 public class TestSwitchPatternMatch {
     public static void main(String[] args) {
         TestSwitchPatternMatch me = new TestSwitchPatternMatch();
+
+        System.out.println("===== testSwitchObject =====");
         me.testSwitchObject(null);
         me.testSwitchObject(new Color[]{Color.RED, Color.BLUE});
+
+        System.out.println("===== testSwitchString =====");
         me.testSwitchString("1234");
         me.testSwitchString(null);
+
+        System.out.println("===== testSwitchEnum =====");
         me.testSwitchEnum();
     }
 
@@ -66,7 +72,9 @@ public class TestSwitchPatternMatch {
             case null -> System.out.println("s is null");
             case "const1", "const2" -> System.out.println("s is constant: " + s);
             case String digit when digit.matches("^[0-9]+$") -> System.out.println("s is a digit.");
-            default -> System.out.println("default");
+            // 这里不需要再写 只匹配String类型的case，否则会导致default分支被覆盖(入参类型已经是String了)
+//            case String str -> System.out.println("s is a string: " + str);
+            default -> System.out.println("s is a string: " + s);
         }
     }
 

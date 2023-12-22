@@ -53,7 +53,7 @@ public class TestSwitchPatternMatch {
             case Integer i when i > 0 -> System.out.println("o is a positive integer.");
             // 匹配 Integer类型 + 负数
             case Integer i when i < 0 -> System.out.println("o is a negative integer.");
-            // 匹配 Integer类型 (这里使用了不具名变量与模式"_"，需要将编译level调整为 Java21 Preview 预览版本)
+            // 匹配 Integer类型 (这里使用了不具名模式变量"_"，需要将编译level调整为 Java21 Preview 预览版本)
             case Integer _ -> System.out.println("o is zero.");
 
             // 匹配long

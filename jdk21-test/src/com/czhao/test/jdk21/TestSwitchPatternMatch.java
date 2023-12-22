@@ -126,4 +126,18 @@ public class TestSwitchPatternMatch {
         };
         System.out.println("numLetters:" + numLetters);
     }
+
+    sealed interface S permits A, B, C {}
+    static final class A implements S {}
+    static final class B implements S {}
+    record C(int i) implements S {}    // 隐式final
+
+    private void testSealedExhaustive(S s) {
+        var result = switch (s) {
+            case A _ -> 1;
+            case B _ -> 2;
+            case C _ -> 3;
+        };
+        System.out.println(result);
+    }
 }

@@ -27,6 +27,12 @@ public class TestSwitchPatternMatch {
         me.testSealedExhaustive(new A());
         me.testSealedExhaustive(new B());
         me.testSealedExhaustive(new C(1));
+
+        System.out.println("===== testNullDefault =====");
+        me.testNullDefault("y");
+        me.testNullDefault("N");
+        me.testNullDefault(null);
+        me.testNullDefault("");
     }
 
     private void testSwitchObject(Object o) {
@@ -142,6 +148,15 @@ public class TestSwitchPatternMatch {
             case A _ -> 1;
             case B _ -> 2;
             case C _ -> 3;
+        };
+        System.out.println(result);
+    }
+
+    private void testNullDefault(String s) {
+        int result = switch (s) {
+            case "y", "Y" -> 1;
+            case "n", "N" -> -1;
+            case null, default -> 0;
         };
         System.out.println(result);
     }

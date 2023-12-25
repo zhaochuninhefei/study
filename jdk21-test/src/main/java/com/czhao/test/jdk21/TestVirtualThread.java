@@ -19,11 +19,13 @@ public class TestVirtualThread {
         me.testReadDbByVirtualThread();
     }
 
+    private static final int CNT_THREADS = 300;
+
     private void testReadDbByPlatformThread() {
         LocalDateTime startTime = LocalDateTime.now();
-        try (var executor = Executors.newCachedThreadPool()) {
+        try (var executor = Executors.newFixedThreadPool(CNT_THREADS)) {
             List<Future<Boolean>> futures = new ArrayList<>();
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < CNT_THREADS; i++) {
                 futures.add(executor.submit(() -> {
                     JDBCTester test = new JDBCTester();
                     test.queryBySql();
@@ -48,7 +50,7 @@ public class TestVirtualThread {
         LocalDateTime startTime = LocalDateTime.now();
         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
             List<Future<Boolean>> futures = new ArrayList<>();
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < CNT_THREADS; i++) {
                 futures.add(executor.submit(() -> {
                     JDBCTester test = new JDBCTester();
                     test.queryBySql();

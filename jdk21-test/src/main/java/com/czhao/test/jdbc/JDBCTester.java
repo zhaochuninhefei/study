@@ -1,6 +1,7 @@
 package com.czhao.test.jdbc;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 
 /**
  * @author zhaochun
@@ -9,7 +10,7 @@ import java.sql.*;
 public class JDBCTester {
 
     //    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String JDBC_URL = "jdbc:mysql://d3-brood-mysql8:3307/db_web_pm?useUnicode=true&characterEncoding=UTF-8&useSSL=false";
+    private static final String JDBC_URL = "jdbc:mysql://d3-brood-mysql8:3307/db_web_pm?useUnicode=true&characterEncoding=UTF-8&useSSL=false&rewriteBatchedStatements=true";
     private static final String JDBC_USER = "zhaochun1";
     private static final String JDBC_PASSWORD = "zhaochun@GITHUB";
 
@@ -18,7 +19,7 @@ public class JDBCTester {
     private static final String SQL_INSERT = """
             INSERT INTO accounts
             (created_at, updated_at, deleted_at, act_name, act_pwd, act_nick_name, act_introduction, act_status, act_register_date)
-            VALUES('2022-12-28 15:41:24.181', '2022-12-28 15:41:24.181', NULL, 'libai', 'libai@DATANG', '诗仙太白', '李白，唐朝诗人，字太白，号青莲居士，世称诗仙。', 0, '2022-12-28 15:41:24.180')
+            VALUES(?, ?, NULL, ?, ?, ?, ?, 0, ?)
             """;
 
     // queryBySql 使用jdbc执行传入的select sql
@@ -51,8 +52,21 @@ public class JDBCTester {
         try (
                 Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
                 PreparedStatement ps = conn.prepareStatement(SQL_INSERT)) {
-            for (int i = 0; i < 10000; i++) {
-                ps.execute();
+            for (int i = 0; i < 100; i++) {
+                // 获取当前时间 LocalDateTime 并转为 Timestamp
+                Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+                for (int j = 0; j < 1000; j++) {
+                    ps.setTimestamp(1, timestamp);
+                    ps.setTimestamp(2, timestamp);
+                    ps.setString(3, "libai");
+                    ps.setString(4, "libai@DATANG");
+                    ps.setString(5, "诗仙太白");
+                    ps.setString(6, "李白，唐朝诗人，字太白，号青莲居士，世称诗仙。");
+                    ps.setTimestamp(7, timestamp);
+                    ps.addBatch();
+                }
+                ps.executeBatch();
+                System.out.println("insert 1000 rows");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

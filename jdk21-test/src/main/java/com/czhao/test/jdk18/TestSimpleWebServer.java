@@ -41,7 +41,7 @@ public class TestSimpleWebServer {
 
     private void startSimpleFileServer() {
         var server = SimpleFileServer.createFileServer(new InetSocketAddress(9000),
-                Path.of("/home/zhaochun/work/sources/github.com/zhaochuninhefei/study/jdk21-test/resource/simpleWeb"),
+                Path.of("/home/zhaochun/work/sources/github.com/zhaochuninhefei/study/jdk21-test/src/main/resources/simpleWeb"),
                 SimpleFileServer.OutputLevel.VERBOSE);
         server.start();
 

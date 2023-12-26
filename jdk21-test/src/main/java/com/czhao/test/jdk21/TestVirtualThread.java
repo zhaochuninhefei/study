@@ -15,8 +15,20 @@ import java.util.concurrent.Future;
 public class TestVirtualThread {
     public static void main(String[] args) {
         TestVirtualThread me = new TestVirtualThread();
+        me.test01();
 //        me.testReadDbByPlatformThread();
-        me.testReadDbByVirtualThread();
+//        me.testReadDbByVirtualThread();
+    }
+
+    private void test01() {
+        Thread v1 = Thread.ofVirtual().name("v1").unstarted(() -> System.out.println("run v1..."));
+        v1.start();
+        try {
+            v1.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("v1 over...");
     }
 
     private static final int CNT_THREADS = 300;

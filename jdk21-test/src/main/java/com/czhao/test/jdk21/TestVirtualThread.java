@@ -17,8 +17,8 @@ public class TestVirtualThread {
     public static void main(String[] args) {
         TestVirtualThread me = new TestVirtualThread();
         me.test01();
-        me.testReadDbByPlatformThread();
-        me.testReadDbByVirtualThread();
+//        me.testReadDbByPlatformThread();
+//        me.testReadDbByVirtualThread();
     }
 
     private void test01() {
@@ -34,7 +34,7 @@ public class TestVirtualThread {
         Runnable task = () -> {
             var threadName = Thread.currentThread().getName();
             System.out.println(threadName + " run...");
-            System.out.println(" Is " + threadName + " virtual thread : " + Thread.currentThread().isVirtual());
+            System.out.println("Is " + threadName + " virtual thread : " + Thread.currentThread().isVirtual());
         };
         Thread v3_0 = builder.start(task);
         Thread v3_1 = builder.start(task);

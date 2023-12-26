@@ -29,6 +29,15 @@ public class TestVirtualThread {
             throw new RuntimeException(e);
         }
         System.out.println("v1 over...");
+
+        Thread.startVirtualThread(() -> System.out.println("run v2..."));
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("Main over...");
     }
 
     private static final int CNT_THREADS = 300;

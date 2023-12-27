@@ -40,8 +40,16 @@ public class TestScopedValue {
     }
 
     private int handleTwo(String str) {
-        System.out.println("RECORD in handleTwo of " + Thread.currentThread().getName() + ":" + RECORD.get());
+        System.out.println("RECORD in handleTwo before ScopedValue.where of " + Thread.currentThread().getName() + ":" + RECORD.get());
         System.out.println(str);
+        ScopedValue.where(RECORD, new MyRecord(5, 6))
+                .run(() -> handleThree(str));
+        System.out.println("RECORD in handleTwo after ScopedValue.where of " + Thread.currentThread().getName() + ":" + RECORD.get());
         return 1;
+    }
+
+    private void handleThree(String str) {
+        System.out.println("RECORD in handleThree of " + Thread.currentThread().getName() + ":" + RECORD.get());
+        System.out.println(str);
     }
 }

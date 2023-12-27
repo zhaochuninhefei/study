@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+
 /**
  * @author zhaochun
  */
@@ -45,9 +47,11 @@ public class TestVirtualThread {
             v1.join();
             v3_0.join();
             v3_1.join();
+            MILLISECONDS.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
 
         System.out.println("Main over...");
     }

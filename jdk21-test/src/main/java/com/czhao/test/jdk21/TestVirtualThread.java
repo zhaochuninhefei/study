@@ -25,18 +25,18 @@ public class TestVirtualThread {
     }
 
     private void test01() {
-        Thread v1 = Thread.ofVirtual().name("v1").unstarted(() -> System.out.println("run v1..."));
+        Thread v1 = Thread.ofVirtual().name("v1").unstarted(() -> System.out.println("run v1, threadID:" + Thread.currentThread().threadId()));
         v1.start();
 
         Thread.startVirtualThread(() -> {
-            System.out.println("run v2...");
+            System.out.println("run v2, threadID:" + Thread.currentThread().threadId());
             System.out.println("Is v2 virtual thread : " + Thread.currentThread().isVirtual());
         });
 
         Thread.Builder builder = Thread.ofVirtual().name("v3-", 0);
         Runnable task = () -> {
             var threadName = Thread.currentThread().getName();
-            System.out.println(threadName + " run...");
+            System.out.println(threadName + " run, threadID:" + Thread.currentThread().threadId());
             System.out.println("Is " + threadName + " virtual thread : " + Thread.currentThread().isVirtual());
         };
         Thread v3_0 = builder.start(task);

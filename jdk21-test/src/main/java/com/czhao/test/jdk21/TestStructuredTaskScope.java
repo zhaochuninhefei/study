@@ -2,11 +2,9 @@ package com.czhao.test.jdk21;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.StructuredTaskScope;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Supplier;
 
@@ -16,7 +14,8 @@ import java.util.function.Supplier;
 public class TestStructuredTaskScope {
     public static void main(String[] args) {
         var me = new TestStructuredTaskScope();
-        me.test01();
+//        me.test01();
+        me.test02();
     }
 
     private void test01() {
@@ -62,6 +61,11 @@ public class TestStructuredTaskScope {
         // 假设这里从表2读取订单ID
         return 1;
     }
+
+    private void test02() {
+        var res = sum();
+        System.out.println("sum result: " + res);
+    }
     
     private int sum() {
         // 创建结构化任务的作用域，并指定关闭策略为 ShutdownOnSuccess, 即只要有任何一个执行成功即关闭所有其他子任务
@@ -78,36 +82,39 @@ public class TestStructuredTaskScope {
     }
 
     private int sumOne() {
+        var threadID = Thread.currentThread().threadId();
+        var sleepMillis = new Random().nextInt(1000);
+        System.out.println("sumOne sleepMillis:" + sleepMillis + " ThreadId:" + threadID);
         try {
-            var sleepMillis = new Random().nextInt(1000);
-            System.out.println("sleepMillis:" + sleepMillis + " ThreadId:" + Thread.currentThread().threadId());
             Thread.sleep(sleepMillis);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(threadID + " interrupted");
             throw new RuntimeException(e);
         }
         return 1;
     }
 
     private int sumTwo() {
+        var threadID = Thread.currentThread().threadId();
+        var sleepMillis = new Random().nextInt(1000);
+        System.out.println("sumTwo sleepMillis:" + sleepMillis + " ThreadId:" + threadID);
         try {
-            var sleepMillis = new Random().nextInt(1000);
-            System.out.println("sleepMillis:" + sleepMillis + " ThreadId:" + Thread.currentThread().threadId());
             Thread.sleep(sleepMillis);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(threadID + " interrupted");
             throw new RuntimeException(e);
         }
         return 2;
     }
     
     private int sumThree() {
+        var threadID = Thread.currentThread().threadId();
+        var sleepMillis = new Random().nextInt(1000);
+        System.out.println("sumThree sleepMillis:" + sleepMillis + " ThreadId:" + threadID);
         try {
-            var sleepMillis = new Random().nextInt(1000);
-            System.out.println("sleepMillis:" + sleepMillis + " ThreadId:" + Thread.currentThread().threadId());
             Thread.sleep(sleepMillis);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(threadID + " interrupted");
             throw new RuntimeException(e);
         }
         return 3;

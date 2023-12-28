@@ -26,11 +26,11 @@ public class TestStructuredTaskScope {
     }
 
     private Response handle() throws ExecutionException, InterruptedException {
-        // 定义一个 结构化任务区域 StructuredTaskScope, 并指定关闭策略为 ShutdownOnFailure
+        // 定义一个 结构化任务的作用域 StructuredTaskScope, 并指定关闭策略为 ShutdownOnFailure
         try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
-            // 向区域添加一个子任务分支
+            // 向作用域添加一个子任务分支
             Supplier<String> user = scope.fork(this::findUser);
-            // 向区域添加另一个子任务分支
+            // 向作用域添加另一个子任务分支
             Supplier<Integer> order = scope.fork(this::fetchOrder);
 
             // join 加入两个子任务

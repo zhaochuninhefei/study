@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 public class TestStructuredTaskScope {
     public static void main(String[] args) {
         var me = new TestStructuredTaskScope();
-//        me.test01();
+        me.test01();
         me.test02();
     }
 

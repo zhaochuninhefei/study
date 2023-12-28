@@ -19,6 +19,7 @@ public class TestVirtualThread {
     public static void main(String[] args) {
         TestVirtualThread me = new TestVirtualThread();
         me.test01();
+        me.test02();
 //        me.testReadDbByPlatformThread();
 //        me.testReadDbByVirtualThread();
     }
@@ -54,6 +55,33 @@ public class TestVirtualThread {
 
 
         System.out.println("Main over...");
+    }
+
+    private void test02() {
+        LocalDateTime startTime = LocalDateTime.now();
+        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            List<Future<Boolean>> futures = new ArrayList<>();
+            // 创建100万个虚拟线程
+            for (int i = 0; i < 1_000_000; i++) {
+                futures.add(executor.submit(() -> {
+                    // 打印当前线程信息
+                    System.out.println(Thread.currentThread().threadId() + " isVirtual:" + Thread.currentThread().isVirtual());
+                    Thread.sleep(1000);
+                    return true;
+                }));
+            }
+            futures.forEach(f -> {
+                try {
+                    f.get();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            executor.shutdown();
+        }
+        LocalDateTime endTime = LocalDateTime.now();
+        // 计算耗时
+        System.out.println("耗时:" + Duration.between(startTime, endTime).toMillis() + "毫秒");
     }
 
     private static final int CNT_THREADS = 300;

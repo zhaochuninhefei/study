@@ -65,12 +65,6 @@ public class TestStructuredTaskScope {
     private void test02() {
         var res = sum();
         System.out.println("sum result: " + res);
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("test02 end");
     }
     
     private int sum() {
@@ -80,6 +74,8 @@ public class TestStructuredTaskScope {
             scope.fork(this::sumOne);
             scope.fork(this::sumTwo);
             scope.fork(this::sumThree);
+            // 分派一个永远不会结束且不会阻塞的子任务
+//            scope.fork(this::sumFour);
             // 加入所有子任务, 指定超时时间
             return scope.joinUntil(Instant.now().plus(1000, ChronoUnit.MILLIS)).result();
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
@@ -128,4 +124,18 @@ public class TestStructuredTaskScope {
         System.out.println("sumThree end ThreadId:" + threadID);
         return 3;
     }
+
+//    private int sumFour() {
+//        var threadID = Thread.currentThread().threadId();
+//        System.out.println("sumFour ThreadId:" + threadID);
+//        var sum = 0;
+//        try {
+//            for (;;) {
+//                sum++;
+//            }
+//        } catch (Exception e) {
+//            System.out.println(threadID + " interrupted");
+//            throw new RuntimeException(e);
+//        }
+//    }
 }

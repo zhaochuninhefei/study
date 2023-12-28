@@ -65,6 +65,12 @@ public class TestStructuredTaskScope {
     private void test02() {
         var res = sum();
         System.out.println("sum result: " + res);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("test02 end");
     }
     
     private int sum() {
@@ -75,7 +81,7 @@ public class TestStructuredTaskScope {
             scope.fork(this::sumTwo);
             scope.fork(this::sumThree);
             // 加入所有子任务, 指定超时时间
-            return scope.joinUntil(Instant.now().plus(3000, ChronoUnit.MILLIS)).result();
+            return scope.joinUntil(Instant.now().plus(1000, ChronoUnit.MILLIS)).result();
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             throw new RuntimeException(e);
         }
@@ -91,6 +97,7 @@ public class TestStructuredTaskScope {
             System.out.println(threadID + " interrupted");
             throw new RuntimeException(e);
         }
+        System.out.println("sumOne end ThreadId:" + threadID);
         return 1;
     }
 
@@ -104,6 +111,7 @@ public class TestStructuredTaskScope {
             System.out.println(threadID + " interrupted");
             throw new RuntimeException(e);
         }
+        System.out.println("sumTwo end ThreadId:" + threadID);
         return 2;
     }
     
@@ -117,6 +125,7 @@ public class TestStructuredTaskScope {
             System.out.println(threadID + " interrupted");
             throw new RuntimeException(e);
         }
+        System.out.println("sumThree end ThreadId:" + threadID);
         return 3;
     }
 }

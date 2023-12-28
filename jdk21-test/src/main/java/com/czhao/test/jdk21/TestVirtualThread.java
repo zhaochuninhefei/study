@@ -19,7 +19,7 @@ public class TestVirtualThread {
     public static void main(String[] args) {
         TestVirtualThread me = new TestVirtualThread();
         me.test01();
-        me.test02();
+//        me.test02();
 //        me.testReadDbByPlatformThread();
 //        me.testReadDbByVirtualThread();
     }
@@ -52,7 +52,6 @@ public class TestVirtualThread {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
 
         System.out.println("Main over...");
     }

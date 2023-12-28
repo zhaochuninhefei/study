@@ -27,8 +27,8 @@ public class TestKEM {
             // 公钥
             var publicKey = kp.getPublic();
             var publicKeyBase64 = encodeToBase64(publicKey);
-            System.out.println("publicKeyBase64 = " + publicKeyBase64);
-            System.out.println("privateKeyBase64 = " + encodeToBase64(kp.getPrivate()));
+            System.out.println("pubKeyBase64 = " + publicKeyBase64);
+            System.out.println("priKeyBase64 = " + encodeToBase64(kp.getPrivate()));
 
             // Receiver公开自己的公钥 publicKeyBase64 发送给 Sender
 

@@ -26,12 +26,17 @@ public class TestStructuredTaskScope {
     }
 
     private Response handle() throws ExecutionException, InterruptedException {
+        // 定义一个 结构化任务区域 StructuredTaskScope, 并指定关闭策略为 ShutdownOnFailure
         try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
-            Supplier<String> user  = scope.fork(this::findUser);
+            // 向区域添加一个子任务分支
+            Supplier<String> user = scope.fork(this::findUser);
+            // 向区域添加另一个子任务分支
             Supplier<Integer> order = scope.fork(this::fetchOrder);
 
-            scope.join()            // 加入两个子任务
-                    .throwIfFailed();  // ... 并传播错误
+            // join 加入两个子任务
+            scope.join()
+                    // 传播错误
+                    .throwIfFailed();
 
             // 在这里，两个子任务都成功，因此组合它们的结果
             return new Response(user.get(), order.get());

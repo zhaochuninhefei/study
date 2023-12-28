@@ -16,6 +16,7 @@ public class TestStructuredTaskScope {
         var me = new TestStructuredTaskScope();
         me.test01();
         me.test02();
+        me.test03();
     }
 
     private void test01() {
@@ -142,5 +143,55 @@ public class TestStructuredTaskScope {
         }
         System.out.println("sumFour end ThreadId:" + threadID);
         return sum;
+    }
+
+    final static ScopedValue<TestScopedValue.MyRecord> RECORD = ScopedValue.newInstance();
+
+    private void test03() {
+        ScopedValue.where(RECORD, new TestScopedValue.MyRecord(1, 2))
+                .run(() -> {
+                    try {
+                        var res = handle();
+                        System.out.println(res);
+                    } catch (ExecutionException | InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+    }
+
+    private Response handle() throws ExecutionException, InterruptedException {
+        // 定义一个 结构化任务的作用域 StructuredTaskScope, 并指定关闭策略为 ShutdownOnFailure
+        try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+            // 在作用域上创建一个分支, 传入子任务定义(lambda)，即分派一个子任务
+            Supplier<String> user = scope.fork(this::findUserWithScope);
+            // 在作用域上创建另一个分支, 传入子任务定义(lambda)，即分派一另个子任务
+            Supplier<Integer> order = scope.fork(this::fetchOrderWithScope);
+
+            // join 将已经分派的子任务加入作用域
+            scope.join()
+                    // 传播错误
+                    .throwIfFailed();
+
+            // 在这里，两个子任务都成功，因此组合它们的结果
+            return new Response(user.get(), order.get());
+        }
+    }
+
+    private String findUserWithScope() {
+        // 打印当前线程信息
+        System.out.println("findUserWithScope current thread: " + Thread.currentThread().threadId() + " isVirtual: " + Thread.currentThread().isVirtual());
+        // 从 RECORD 获取信息并打印
+        System.out.println("findUserWithScope RECORD: " + RECORD.get());
+        // 假设这里从表1读取用户名
+        return "tester";
+    }
+
+    private Integer fetchOrderWithScope() {
+        // 打印当前线程信息
+        System.out.println("fetchOrderWithScope current thread: " + Thread.currentThread().threadId() + " isVirtual: " + Thread.currentThread().isVirtual());
+        // 从 RECORD 获取信息并打印
+        System.out.println("fetchOrderWithScope RECORD: " + RECORD.get());
+        // 假设这里从表2读取订单ID
+        return 1;
     }
 }

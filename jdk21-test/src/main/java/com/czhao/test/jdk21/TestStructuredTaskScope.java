@@ -66,16 +66,17 @@ public class TestStructuredTaskScope {
         var res = sum();
         System.out.println("sum result: " + res);
     }
-    
+
     private int sum() {
-        // 创建结构化任务的作用域，并指定关闭策略为 ShutdownOnSuccess, 即只要有任何一个执行成功即关闭所有其他子任务
+        // 创建结构化任务的作用域，并指定关闭策略为 ShutdownOnSuccess, 即只要有任何一个执行成功即尝试关闭所有其他子任务。
+        // 但如果某个子任务一直占用cpu，不会陷入阻塞，那么shutdown依然无法强制让该子任务线程中止，无论这个子任务的线程是不是虚拟线程。
         try (var scope = new StructuredTaskScope.ShutdownOnSuccess<Integer>()) {
             // 分派不同的sum子任务
             scope.fork(this::sumOne);
             scope.fork(this::sumTwo);
             scope.fork(this::sumThree);
-            // 分派一个永远不会结束且不会阻塞的子任务
-//            scope.fork(this::sumFour);
+            // 分派一个不会阻塞的子任务
+            scope.fork(this::sumFour);
             // 加入所有子任务, 指定超时时间
             return scope.joinUntil(Instant.now().plus(1000, ChronoUnit.MILLIS)).result();
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
@@ -110,7 +111,7 @@ public class TestStructuredTaskScope {
         System.out.println("sumTwo end ThreadId:" + threadID);
         return 2;
     }
-    
+
     private int sumThree() {
         var threadID = Thread.currentThread().threadId();
         var sleepMillis = new Random().nextInt(1000);
@@ -125,17 +126,20 @@ public class TestStructuredTaskScope {
         return 3;
     }
 
-//    private int sumFour() {
-//        var threadID = Thread.currentThread().threadId();
-//        System.out.println("sumFour ThreadId:" + threadID);
-//        var sum = 0;
-//        try {
-//            for (;;) {
-//                sum++;
-//            }
-//        } catch (Exception e) {
-//            System.out.println(threadID + " interrupted");
-//            throw new RuntimeException(e);
-//        }
-//    }
+    private int sumFour() {
+        var threadID = Thread.currentThread().threadId();
+        System.out.println("sumFour ThreadId:" + threadID);
+        var sum = 0;
+        for (; ; ) {
+            // 判断当前线程是否接收到 interrupt 信号
+            if (Thread.currentThread().isInterrupted()) {
+                System.out.println("sumFour interrupted ThreadId:" + threadID);
+                break;
+            }
+            System.out.println("sumFour still running...");
+            sum++;
+        }
+        System.out.println("sumFour end ThreadId:" + threadID);
+        return sum;
+    }
 }

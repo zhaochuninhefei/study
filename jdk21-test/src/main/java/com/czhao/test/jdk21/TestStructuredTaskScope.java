@@ -15,8 +15,8 @@ public class TestStructuredTaskScope {
 
     private void test01() {
         try {
-            var res = handle();
-            System.out.println("handle result: " + res);
+            var res = queryUserOrder();
+            System.out.println("queryUserOrder result: " + res);
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -25,7 +25,7 @@ public class TestStructuredTaskScope {
     private record Response(String user, Integer order) {
     }
 
-    private Response handle() throws ExecutionException, InterruptedException {
+    private Response queryUserOrder() throws ExecutionException, InterruptedException {
         // 定义一个 结构化任务的作用域 StructuredTaskScope, 并指定关闭策略为 ShutdownOnFailure
         try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
             // 在作用域上创建一个分支, 传入子任务定义(lambda)，即分派一个子任务

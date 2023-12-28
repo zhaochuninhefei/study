@@ -17,6 +17,8 @@ public class TestStructuredTaskScope {
         me.test01();
         me.test02();
         me.test03();
+        // 打印主线程是否是虚拟线程
+        System.out.println("main thread isVirtual: " + Thread.currentThread().isVirtual());
     }
 
     private void test01() {

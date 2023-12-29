@@ -19,9 +19,9 @@ public class TestSwitchPatternMatch {
         me.testSwitchEnum();
 
         System.out.println("===== testTypeCoverage =====");
-        me.testTypeCoverage("99", Color.GREEN);
-        me.testTypeCoverage(-98, Color.BLUE);
-        me.testTypeCoverage("asdf", Color.RED);
+        me.testTypeCoverage("99", Coin.HEADS);
+        me.testTypeCoverage(-98, Coin.TAILS);
+        me.testTypeCoverage("asdf", Coin.TAILS);
 
         System.out.println("===== testSealedExhaustive =====");
         me.testSealedExhaustive(new A());
@@ -120,7 +120,7 @@ public class TestSwitchPatternMatch {
         }
     }
 
-    private void testTypeCoverage(Object o, Color color) {
+    private void testTypeCoverage(Object o, Currency c) {
         var result = switch (o) {
             case Integer i -> i;
             case String s when s.matches("^\\d+$") -> Integer.parseInt(s);
@@ -129,10 +129,9 @@ public class TestSwitchPatternMatch {
         };
         System.out.println("o: " + result);
 
-        int numLetters = switch (color) {
-            case RED -> 3;
-            case GREEN -> 5;
-            case BLUE -> 6;
+        int numLetters = switch (c) {
+            case Coin.HEADS -> 1;
+            case Coin.TAILS -> 2;
             // 这里不推荐使用default保证穷尽，因为分支较少且明确，不加default有助于编译器检查switch分支有没有遗漏某个case。
         };
         System.out.println("numLetters:" + numLetters);

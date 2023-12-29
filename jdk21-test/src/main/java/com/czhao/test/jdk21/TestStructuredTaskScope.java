@@ -72,8 +72,8 @@ public class TestStructuredTaskScope {
 
     private int sum() {
         // 创建结构化任务的作用域，并指定关闭策略为 ShutdownOnSuccess, 即只要有任何一个执行成功即尝试关闭所有其他子任务。
-        // 但如果某个子任务一直占用cpu，不会陷入阻塞，那么shutdown依然无法强制让该子任务线程中止，无论这个子任务的线程是不是虚拟线程。
-        // 因此对于没有IO阻塞的子任务，一定要在实现该子任务时添加 interrupt 处理，例如下面的 sumFour
+        // 但如果某个子任务一直占用cpu，不会陷入WAITING或TIMED_WAITING状态，那么shutdown依然无法强制让该子任务线程中止，无论这个子任务的线程是不是虚拟线程。
+        // 因此对于没有InterruptedException的子任务，一定要在实现该子任务时添加 interrupt 处理，例如下面的 sumFour
         try (var scope = new StructuredTaskScope.ShutdownOnSuccess<Integer>()) {
             // 分派不同的sum子任务
             scope.fork(this::sumOne);

@@ -30,7 +30,7 @@ public class TestStringTemplate {
         var message = STR. "Welcome to use String Template, \{ name } !" ;
         System.out.println(message);
 
-        // 直接埋入字符串
+        // 直接埋入变量
         String firstName = "Chun";
         String lastName = "Zhao";
         String fullName = STR. "\{ firstName } \{ lastName }" ;

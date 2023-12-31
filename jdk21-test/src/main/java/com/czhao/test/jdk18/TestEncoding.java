@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 /**
  * @author zhaochun
  */
+@SuppressWarnings("CallToPrintStackTrace")
 public class TestEncoding {
     public static void main(String[] args) {
         System.out.println("encodings in JDK21:");

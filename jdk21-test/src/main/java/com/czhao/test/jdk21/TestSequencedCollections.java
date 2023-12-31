@@ -15,7 +15,7 @@ public class TestSequencedCollections {
 
     public static void main(String[] args) {
         TestSequencedCollections me = new TestSequencedCollections();
-        // 打印 STRS
+        // 打印 C_SOME_STRINGS
         System.out.println(STR. "C_SOME_STRINGS = \{ Arrays.toString(C_SOME_STRINGS) }" );
         for (int i = 0; i < 20; i++) {
             System.out.println(STR. "----- i = \{ i } -----" );

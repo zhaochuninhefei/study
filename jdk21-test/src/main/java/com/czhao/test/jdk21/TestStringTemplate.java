@@ -3,6 +3,7 @@ package com.czhao.test.jdk21;
 import java.io.File;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.stream.Stream;
 
 import static java.lang.StringTemplate.STR;
 import static java.util.FormatProcessor.FMT;
@@ -20,6 +21,7 @@ public class TestStringTemplate {
         me.testJsonTemplate();
         me.testMdTemplate();
         me.testFMT();
+        me.testLoopByNested();
     }
 
     private void test01() {
@@ -114,12 +116,14 @@ public class TestStringTemplate {
         System.out.println(json);
     }
 
-    private void testMdTemplate() {
-        record Rectangle(String name, double width, double height) {
-            double area() {
-                return width * height;
-            }
+
+    record Rectangle(String name, double width, double height) {
+        double area() {
+            return width * height;
         }
+    }
+
+    private void testMdTemplate() {
         Rectangle[] zone = new Rectangle[] {
                 new Rectangle("Alfa", 17.8, 31.4),
                 new Rectangle("Bravo", 9.6, 12.4),
@@ -138,11 +142,6 @@ public class TestStringTemplate {
     }
 
     private void testFMT() {
-        record Rectangle(String name, double width, double height) {
-            double area() {
-                return width * height;
-            }
-        }
         Rectangle[] zone = new Rectangle[] {
                 new Rectangle("Alfa", 17.8, 31.4),
                 new Rectangle("Bravo", 9.6, 12.4),
@@ -156,5 +155,29 @@ public class TestStringTemplate {
             \{" ".repeat(28)} Total %7.2f\{zone[0].area() + zone[1].area() + zone[2].area()}
             """;
         System.out.println(table);
+    }
+
+    private void testLoopByNested() {
+        Rectangle[] zone = new Rectangle[] {
+                new Rectangle("Alfa", 17.8, 31.4),
+                new Rectangle("Bravo", 9.6, 12.4),
+                new Rectangle("Charlie", 7.1, 11.23),
+        };
+        String table = STR."""
+            | Description | Width | Height | Area |
+            | --- | --- | --- | --- |
+            \{ createLines(zone) }
+            Total: \{ Stream.of(zone).mapToDouble(Rectangle::area).sum() }
+            """;
+        System.out.println(table);
+    }
+
+    private String createLines(Rectangle[] zone) {
+        StringBuilder lines = new StringBuilder();
+        for (Rectangle z : zone) {
+            var line = STR."| \{z.name} | \{z.width} | \{z.height} | \{z.area()} |";
+            lines.append(line).append("\n");
+        }
+        return lines.toString();
     }
 }

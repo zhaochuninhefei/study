@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author zhaochun
@@ -20,6 +19,7 @@ public class TestVirtualThread {
         TestVirtualThread me = new TestVirtualThread();
         me.test01();
         me.test02();
+        me.test03();
         me.testReadDbByPlatformThread();
         me.testReadDbByVirtualThread();
     }
@@ -48,7 +48,7 @@ public class TestVirtualThread {
             v1.join();
             v3_0.join();
             v3_1.join();
-            MILLISECONDS.sleep(1000);
+            TimeUnit.MILLISECONDS.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -81,6 +81,21 @@ public class TestVirtualThread {
         LocalDateTime endTime = LocalDateTime.now();
         // 计算耗时
         System.out.println("耗时:" + Duration.between(startTime, endTime).toMillis() + "毫秒");
+    }
+
+    private void test03() {
+        try (var executor = Executors.newSingleThreadScheduledExecutor(Thread.ofVirtual().factory())) {
+            executor.scheduleWithFixedDelay(() -> {
+                System.out.println(Thread.currentThread().threadId() + " isVirtual:" + Thread.currentThread().isVirtual());
+                System.out.println("test03 executor.scheduleWithFixedDelay...");
+            }, 3, 3, TimeUnit.SECONDS);
+            Thread.sleep(10000);
+            executor.shutdown();
+            var waitResult = executor.awaitTermination(60, TimeUnit.SECONDS);
+            System.out.println("waitResult:" + waitResult);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static final int CNT_THREADS = 300;

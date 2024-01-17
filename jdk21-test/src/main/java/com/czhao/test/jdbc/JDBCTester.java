@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 @SuppressWarnings({"SqlDialectInspection", "SqlNoDataSourceInspection"})
 public class JDBCTester {
 
-    //    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String JDBC_URL = "jdbc:mysql://d3-brood-mysql8:3307/db_web_pm?useUnicode=true&characterEncoding=UTF-8&useSSL=false&rewriteBatchedStatements=true";
+    private static final String JDBC_URL_MYSQL = "jdbc:mysql://d3-brood-mysql8:3307/db_web_pm?useUnicode=true&characterEncoding=UTF-8&useSSL=false&rewriteBatchedStatements=true";
+    private static final String JDBC_URL_MARIA = "jdbc:mariadb://d3-brood-mysql8:3307/db_web_pm?useUnicode=true&characterEncoding=UTF-8&useSSL=false&rewriteBatchedStatements=true";
     private static final String JDBC_USER = "zhaochun1";
     private static final String JDBC_PASSWORD = "zhaochun@GITHUB";
 
@@ -22,10 +22,21 @@ public class JDBCTester {
             VALUES(?, ?, NULL, ?, ?, ?, ?, 0, ?)
             """;
 
+    private final String jdbcUrl;
+
+    public JDBCTester(int jdbcType) {
+        if (jdbcType == 1) {
+            this.jdbcUrl = JDBC_URL_MYSQL;
+        } else {
+            this.jdbcUrl = JDBC_URL_MARIA;
+        }
+    }
+
     // queryBySql 使用jdbc执行传入的select sql
+    @SuppressWarnings("StringTemplateMigration")
     public void queryBySql() {
         try (
-                Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+                Connection conn = DriverManager.getConnection(jdbcUrl, JDBC_USER, JDBC_PASSWORD);
                 Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 ResultSet rs = st.executeQuery(SQL_SELECT)) {
             if (rs.next()) {
@@ -40,7 +51,7 @@ public class JDBCTester {
 
     public void clearTbl() {
         try (
-                Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+                Connection conn = DriverManager.getConnection(jdbcUrl, JDBC_USER, JDBC_PASSWORD);
                 PreparedStatement ps = conn.prepareStatement(SQL_TRUCATE)) {
             ps.execute();
         } catch (SQLException e) {
@@ -50,7 +61,7 @@ public class JDBCTester {
 
     public void insertTbl() {
         try (
-                Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+                Connection conn = DriverManager.getConnection(jdbcUrl, JDBC_USER, JDBC_PASSWORD);
                 PreparedStatement ps = conn.prepareStatement(SQL_INSERT)) {
             for (int i = 0; i < 100; i++) {
                 // 获取当前时间 LocalDateTime 并转为 Timestamp
@@ -71,12 +82,5 @@ public class JDBCTester {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void main(String[] args) {
-        JDBCTester me = new JDBCTester();
-        me.queryBySql();
-//        me.clearTbl();
-//        me.insertTbl();
     }
 }

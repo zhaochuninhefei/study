@@ -23,8 +23,10 @@ public class TestVirtualThread {
         me.test04();
         me.test05();
         me.test06();
+        me.prepareData();
         me.testReadDbByPlatformThread();
-        me.testReadDbByVirtualThread();
+        me.testReadDbByVirtualThread(1);
+        me.testReadDbByVirtualThread(2);
     }
 
     private void test01() {
@@ -164,7 +166,14 @@ public class TestVirtualThread {
         System.out.println("test06 结束...");
     }
 
-    private static final int CNT_THREADS = 300;
+
+    private void prepareData() {
+        JDBCTester test = new JDBCTester(1);
+        test.clearTbl();
+        test.insertTbl();
+    }
+
+    private static final int CNT_THREADS = 500;
 
     private void testReadDbByPlatformThread() {
         LocalDateTime startTime = LocalDateTime.now();
@@ -172,7 +181,7 @@ public class TestVirtualThread {
             List<Future<Boolean>> futures = new ArrayList<>();
             for (int i = 0; i < CNT_THREADS; i++) {
                 futures.add(executor.submit(() -> {
-                    JDBCTester test = new JDBCTester();
+                    JDBCTester test = new JDBCTester(1);
                     test.queryBySql();
                     return true;
                 }));
@@ -191,13 +200,13 @@ public class TestVirtualThread {
         System.out.println("耗时:" + Duration.between(startTime, endTime).toMillis() + "毫秒");
     }
 
-    private void testReadDbByVirtualThread() {
+    private void testReadDbByVirtualThread(int jdbcType) {
         LocalDateTime startTime = LocalDateTime.now();
         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
             List<Future<Boolean>> futures = new ArrayList<>();
             for (int i = 0; i < CNT_THREADS; i++) {
                 futures.add(executor.submit(() -> {
-                    JDBCTester test = new JDBCTester();
+                    JDBCTester test = new JDBCTester(jdbcType);
                     test.queryBySql();
                     return true;
                 }));

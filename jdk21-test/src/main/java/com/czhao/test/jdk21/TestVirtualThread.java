@@ -173,7 +173,7 @@ public class TestVirtualThread {
         test.insertTbl();
     }
 
-    private static final int CNT_THREADS = 500;
+    private static final int CNT_THREADS = 300;
 
     private void testReadDbByPlatformThread() {
         LocalDateTime startTime = LocalDateTime.now();

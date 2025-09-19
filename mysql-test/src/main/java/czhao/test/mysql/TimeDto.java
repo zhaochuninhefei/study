@@ -3,14 +3,21 @@ package czhao.test.mysql;
 /**
  * @author zhaochun
  */
+@SuppressWarnings("unused")
 public class TimeDto {
+    // prepareData 耗时(毫秒)
     private long prepareDataTime;
 
+    // truncateTables 耗时(毫秒)
     private long truncateTime;
 
+    // insertOrder 耗时(毫秒)
     private long insertOrdTime;
+    // insertCustom 耗时(毫秒)
     private long insertCstTime;
+    // insertProduct 耗时(毫秒)
     private long insertPrdTime;
+    // insertWarehouse 耗时(毫秒)
     private long insertWhsTime;
 
     private long selectOrdConnTime;

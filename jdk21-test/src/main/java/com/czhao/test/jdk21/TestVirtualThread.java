@@ -17,16 +17,16 @@ import java.util.concurrent.TimeUnit;
 public class TestVirtualThread {
     public static void main(String[] args) {
         TestVirtualThread me = new TestVirtualThread();
-        me.test01();
-        me.test02();
-        me.test03();
-        me.test04();
-        me.test05();
-        me.test06();
-        me.prepareData();
-        me.testReadDbByPlatformThread();
-        me.testReadDbByVirtualThread(1);
-        me.testReadDbByVirtualThread(2);
+//        me.test01();
+//        me.test02();
+//        me.test03();
+//        me.test04();
+//        me.test05();
+//        me.test06();
+//        me.prepareData(3);
+        me.testReadDbByPlatformThread(2);
+//        me.testReadDbByVirtualThread(1);
+//        me.testReadDbByVirtualThread(3);
     }
 
     private void test01() {
@@ -167,21 +167,21 @@ public class TestVirtualThread {
     }
 
 
-    private void prepareData() {
-        JDBCTester test = new JDBCTester(1);
+    private void prepareData(int jdbcType) {
+        JDBCTester test = new JDBCTester(jdbcType);
         test.clearTbl();
         test.insertTbl();
     }
 
     private static final int CNT_THREADS = 300;
 
-    private void testReadDbByPlatformThread() {
+    private void testReadDbByPlatformThread(int jdbcType) {
         LocalDateTime startTime = LocalDateTime.now();
         try (var executor = Executors.newFixedThreadPool(CNT_THREADS)) {
             List<Future<Boolean>> futures = new ArrayList<>();
             for (int i = 0; i < CNT_THREADS; i++) {
                 futures.add(executor.submit(() -> {
-                    JDBCTester test = new JDBCTester(1);
+                    JDBCTester test = new JDBCTester(jdbcType);
                     test.queryBySql();
                     return true;
                 }));

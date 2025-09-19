@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 public class JDBCTester {
 
     private static final String JDBC_URL_MYSQL = "jdbc:mysql://d3-brood-mysql8:3307/db_web_pm?useUnicode=true&characterEncoding=UTF-8&useSSL=false&rewriteBatchedStatements=true";
-    private static final String JDBC_URL_MARIA = "jdbc:mariadb://d3-brood-mysql8:3307/db_web_pm?useUnicode=true&characterEncoding=UTF-8&useSSL=false&rewriteBatchedStatements=true";
+    private static final String JDBC_URL_MARIA = "jdbc:mariadb://d3-brood-mysql8:3308/db_web_pm?useUnicode=true&characterEncoding=UTF-8&useSSL=false&rewriteBatchedStatements=true";
+    private static final String JDBC_URL_MARIA_REMOTE = "jdbc:mariadb://192.168.60.60:3308/db_web_pm?useUnicode=true&characterEncoding=UTF-8&useSSL=false&rewriteBatchedStatements=true";
     private static final String JDBC_USER = "zhaochun1";
     private static final String JDBC_PASSWORD = "zhaochun@GITHUB";
 
@@ -25,11 +26,12 @@ public class JDBCTester {
     private final String jdbcUrl;
 
     public JDBCTester(int jdbcType) {
-        if (jdbcType == 1) {
-            this.jdbcUrl = JDBC_URL_MYSQL;
-        } else {
-            this.jdbcUrl = JDBC_URL_MARIA;
-        }
+        this.jdbcUrl = switch (jdbcType) {
+            case 1 -> JDBC_URL_MYSQL;
+            case 2 -> JDBC_URL_MARIA;
+            case 3 -> JDBC_URL_MARIA_REMOTE;
+            default -> throw new IllegalArgumentException("JDBC type is not valid");
+        };
     }
 
     // queryBySql 使用jdbc执行传入的select sql

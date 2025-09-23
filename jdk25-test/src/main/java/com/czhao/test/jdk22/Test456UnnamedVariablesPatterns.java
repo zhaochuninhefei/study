@@ -3,6 +3,7 @@ package com.czhao.test.jdk22;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings({"java:S106","java:S2094"})
 public class Test456UnnamedVariablesPatterns {
     public static void main(String[] args) {
         Test456UnnamedVariablesPatterns test = new Test456UnnamedVariablesPatterns();

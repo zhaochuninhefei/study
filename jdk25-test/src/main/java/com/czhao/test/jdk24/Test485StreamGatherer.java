@@ -95,13 +95,12 @@ public class Test485StreamGatherer {
     private void testWindowFixed() {
         System.out.println(Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9).gather(Gatherers.windowFixed(3)).toList());
         System.out.println(Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9).gather(new WindowFixed(3)).toList());
-        System.out.println(Stream.of(1,2,3,4,5,6,7,8,9).gather(fixedWindow(3)).toList());
+        System.out.println(Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9).gather(fixedWindow(3)).toList());
     }
 
     @SuppressWarnings("DuplicatedCode")
     record WindowFixed<TR>(int windowSize)
-            implements Gatherer<TR, ArrayList<TR>, List<TR>>
-    {
+            implements Gatherer<TR, ArrayList<TR>, List<TR>> {
 
         public WindowFixed {
             // Validate input
@@ -150,7 +149,7 @@ public class Test485StreamGatherer {
             return (window, downstream) -> {
                 // If the downstream still accepts more elements and the current
                 // open window is non-empty, then send a copy of it downstream
-                if(!downstream.isRejecting() && !window.isEmpty()) {
+                if (!downstream.isRejecting() && !window.isEmpty()) {
                     downstream.push(new ArrayList<>(window));
                     window.clear();
                 }
@@ -161,9 +160,10 @@ public class Test485StreamGatherer {
     /**
      * Gathers elements into fixed-size groups. The last group may contain fewer
      * elements.
+     *
      * @param windowSize the maximum size of the groups
+     * @param <TR>       the type of elements the returned gatherer consumes and produces
      * @return a new gatherer which groups elements into fixed-size groups
-     * @param <TR> the type of elements the returned gatherer consumes and produces
      */
     @SuppressWarnings("SameParameterValue")
     static <TR> Gatherer<TR, ?, List<TR>> fixedWindow(int windowSize) {
@@ -209,7 +209,7 @@ public class Test485StreamGatherer {
                 (window, downstream) -> {
                     // If the downstream still accepts more elements and the current
                     // open window is non-empty then send a copy of it downstream
-                    if(!downstream.isRejecting() && !window.isEmpty()) {
+                    if (!downstream.isRejecting() && !window.isEmpty()) {
                         downstream.push(new ArrayList<>(window));
                         window.clear();
                     }
